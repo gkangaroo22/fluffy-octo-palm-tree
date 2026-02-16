@@ -4,1279 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>NYC 2026</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap');
-
-:root {
-  /* Dark Warehouse Base */
-  --pure-black: #0a0a0a;
-  --dark-card: #1a1a1a;
-  --darker-gray: #2a2a2a;
-
-  /* Sophisticated Metallics */
-  --steel-blue: #8FB4D6;
-  --ice-blue: #B8D4E8;
-  --soft-cyan: #7FC7D9;
-  --muted-purple: #B89FD9;
-  --warm-gold: #D4AF7A;
-  --rose-gold: #D4A5A5;
-
-  /* Text */
-  --white: #ffffff;
-  --gray: #888888;
-  --light-gray: #cccccc;
-
-  /* Subtle Glow Effects */
-  --steel-glow: 0 0 15px rgba(143, 180, 214, 0.3);
-  --purple-glow: 0 0 15px rgba(184, 159, 217, 0.3);
-  --gold-glow: 0 0 15px rgba(212, 175, 122, 0.3);
-
-  /* Event Colors */
-  --dining: var(--soft-cyan);
-  --dance: var(--warm-gold);
-  --party: var(--muted-purple);
-  --culture: var(--rose-gold);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  background: var(--pure-black);
-  color: var(--white);
-  padding-bottom: 90px;
-  min-height: 100vh;
-  position: relative;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* === AMBIENT WAREHOUSE LIGHTING === */
-.ambient-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.ambient-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0;
-  animation: orbDrift 12s ease-in-out infinite;
-}
-
-.ambient-orb.orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(184, 159, 217, 0.12) 0%, transparent 70%);
-  top: -100px;
-  left: -100px;
-  animation-delay: 0s;
-  animation-duration: 14s;
-}
-
-.ambient-orb.orb-2 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(143, 180, 214, 0.1) 0%, transparent 70%);
-  top: 40%;
-  right: -150px;
-  animation-delay: -4s;
-  animation-duration: 16s;
-}
-
-.ambient-orb.orb-3 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(212, 175, 122, 0.08) 0%, transparent 70%);
-  bottom: 10%;
-  left: 20%;
-  animation-delay: -8s;
-  animation-duration: 18s;
-}
-
-@keyframes orbDrift {
-  0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
-  20% { opacity: 1; }
-  50% { opacity: 0.7; transform: translate(40px, -30px) scale(1.15); }
-  80% { opacity: 1; }
-}
-
-/* Film grain overlay */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.4;
-}
-
-/* Subtle scanlines for warehouse CRT feel */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(0, 0, 0, 0.03) 3px,
-    rgba(0, 0, 0, 0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-.tab-content, header, .nav-tabs {
-  position: relative;
-  z-index: 2;
-}
-
-/* === HEADER === */
-header {
-  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
-  padding: 36px 20px 32px;
-  text-align: center;
-  border-bottom: 1px solid rgba(143, 180, 214, 0.3);
-  box-shadow:
-    0 4px 40px rgba(0, 0, 0, 0.6),
-    0 2px 30px rgba(143, 180, 214, 0.1),
-    inset 0 -1px 0 rgba(143, 180, 214, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Light beam sweep across header */
-header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 60px;
-  height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
-  transform: skewX(-15deg);
-  animation: headerSweep 8s ease-in-out infinite;
-}
-
-@keyframes headerSweep {
-  0%, 100% { left: -100%; }
-  50% { left: 200%; }
-}
-
-/* Disco ball container */
-.disco-container {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 16px;
-}
-
-.header-emoji {
-  font-size: 3.5rem;
-  display: block;
-  animation: discoBall3D 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(184, 159, 217, 0.4));
-  position: relative;
-  z-index: 2;
-}
-
-@keyframes discoBall3D {
-  0%, 100% {
-    transform: rotateY(0deg) scale(1);
-    filter: drop-shadow(0 0 12px rgba(184, 159, 217, 0.4));
-  }
-  25% {
-    transform: rotateY(90deg) scale(1.06);
-    filter: drop-shadow(6px 0 20px rgba(255, 255, 255, 0.8)) brightness(1.3);
-  }
-  50% {
-    transform: rotateY(180deg) scale(1);
-    filter: drop-shadow(0 0 12px rgba(184, 159, 217, 0.4));
-  }
-  75% {
-    transform: rotateY(270deg) scale(1.06);
-    filter: drop-shadow(-6px 0 20px rgba(255, 255, 255, 0.8)) brightness(1.3);
-  }
-}
-
-/* Light scatter particles around disco ball */
-.light-scatter {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--white);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.light-scatter:nth-child(1) { top: -8px; left: 50%; animation: scatter 3s 0s ease-in-out infinite; background: var(--ice-blue); }
-.light-scatter:nth-child(2) { top: 20%; right: -12px; animation: scatter 3s 0.4s ease-in-out infinite; background: var(--muted-purple); }
-.light-scatter:nth-child(3) { bottom: -6px; left: 30%; animation: scatter 3s 0.8s ease-in-out infinite; background: var(--warm-gold); }
-.light-scatter:nth-child(4) { top: 30%; left: -10px; animation: scatter 3s 1.2s ease-in-out infinite; background: var(--rose-gold); }
-.light-scatter:nth-child(5) { bottom: 10%; right: -8px; animation: scatter 3s 1.6s ease-in-out infinite; background: var(--steel-blue); }
-.light-scatter:nth-child(6) { top: -4px; right: 20%; animation: scatter 3s 2.0s ease-in-out infinite; background: var(--soft-cyan); }
-
-@keyframes scatter {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  30% { opacity: 0.9; transform: scale(1.5); }
-  60% { opacity: 0.4; transform: scale(1); }
-}
-
-h1 {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 2.8rem;
-  font-weight: 900;
-  color: var(--white);
-  margin-bottom: 8px;
-  letter-spacing: -2px;
-  text-transform: uppercase;
-  text-shadow: 0 0 30px rgba(143, 180, 214, 0.3);
-  position: relative;
-}
-
-.subtitle {
-  color: var(--ice-blue);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  font-weight: 700;
-}
-
-/* Countdown */
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.countdown-num {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 1.4rem;
-  color: var(--warm-gold);
-  text-shadow: 0 0 12px rgba(212, 175, 122, 0.4);
-  line-height: 1;
-}
-
-.countdown-label {
-  font-size: 0.6rem;
-  color: var(--gray);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-top: 4px;
-}
-
-/* === NAVIGATION - Frosted Glass === */
-.nav-tabs {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  background: rgba(10, 10, 10, 0.85);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  padding: 8px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid rgba(143, 180, 214, 0.15);
-  z-index: 200;
-  gap: 6px;
-}
-
-.tab-btn {
-  background: rgba(26, 26, 26, 0.6);
-  border: 1px solid transparent;
-  color: var(--gray);
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 12px 4px;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0px;
-  border-radius: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
-}
-
-.tab-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: var(--steel-blue);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0 0 2px 2px;
-}
-
-.tab-btn.active::before {
-  width: 80%;
-}
-
-.tab-btn.active {
-  color: var(--steel-blue);
-  background: rgba(143, 180, 214, 0.08);
-  border-color: rgba(143, 180, 214, 0.2);
-  box-shadow: 0 0 20px rgba(143, 180, 214, 0.08);
-}
-
-.tab-btn:not(.active):hover {
-  background: rgba(42, 42, 42, 0.6);
-  border-color: rgba(255, 255, 255, 0.05);
-  color: var(--light-gray);
-}
-
-/* === CONTENT === */
-.tab-content {
-  display: none;
-  padding: 24px 20px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.tab-content.active {
-  display: block;
-  animation: tabFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes tabFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === CARDS - Category-Colored === */
-.card {
-  background: linear-gradient(135deg, #1a1a1a 0%, #141414 100%);
-  border-radius: 14px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  opacity: 0;
-  animation: cardFadeIn 0.6s ease-out forwards;
-}
-
-@keyframes cardFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2) { animation-delay: 0.1s; }
-.card:nth-child(3) { animation-delay: 0.15s; }
-.card:nth-child(4) { animation-delay: 0.2s; }
-.card:nth-child(5) { animation-delay: 0.25s; }
-.card:nth-child(6) { animation-delay: 0.3s; }
-.card:nth-child(7) { animation-delay: 0.35s; }
-.card:nth-child(8) { animation-delay: 0.4s; }
-.card:nth-child(9) { animation-delay: 0.45s; }
-.card:nth-child(10) { animation-delay: 0.5s; }
-
-/* Default left accent */
-.card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--steel-blue);
-  box-shadow: 0 0 10px rgba(143, 180, 214, 0.3);
-  transition: box-shadow 0.4s;
-}
-
-/* Category-specific accent colors */
-.card.dining::before {
-  background: var(--soft-cyan);
-  box-shadow: 0 0 10px rgba(127, 199, 217, 0.3);
-}
-.card.dining:hover::before {
-  box-shadow: 0 0 20px rgba(127, 199, 217, 0.6);
-}
-
-.card.dance::before {
-  background: var(--warm-gold);
-  box-shadow: 0 0 10px rgba(212, 175, 122, 0.3);
-}
-.card.dance:hover::before {
-  box-shadow: 0 0 20px rgba(212, 175, 122, 0.6);
-}
-
-.card.party::before {
-  background: var(--muted-purple);
-  box-shadow: 0 0 10px rgba(184, 159, 217, 0.3);
-}
-.card.party:hover::before {
-  box-shadow: 0 0 20px rgba(184, 159, 217, 0.6);
-}
-
-.card.culture::before {
-  background: var(--rose-gold);
-  box-shadow: 0 0 10px rgba(212, 165, 165, 0.3);
-}
-.card.culture:hover::before {
-  box-shadow: 0 0 20px rgba(212, 165, 165, 0.6);
-}
-
-/* Category-specific hover glows */
-.card:hover {
-  border-color: rgba(255, 255, 255, 0.08);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-}
-
-.card.dining:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(127, 199, 217, 0.06);
-}
-.card.dance:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 122, 0.06);
-}
-.card.party:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(184, 159, 217, 0.06);
-}
-.card.culture:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 165, 165, 0.06);
-}
-
-.card-img {
-  height: 0;
-  display: none;
-}
-
-.card-body {
-  padding: 26px;
-}
-
-/* Time Badge - Category-aware */
-.time-badge {
-  background: linear-gradient(135deg, var(--steel-blue) 0%, var(--ice-blue) 100%);
-  color: var(--pure-black);
-  font-weight: 800;
-  font-size: 0.7rem;
-  padding: 7px 14px;
-  border-radius: 6px;
-  display: inline-block;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  box-shadow: 0 2px 8px rgba(143, 180, 214, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.card.dining .time-badge {
-  background: linear-gradient(135deg, var(--soft-cyan) 0%, #a8dce8 100%);
-}
-.card.dance .time-badge {
-  background: linear-gradient(135deg, var(--warm-gold) 0%, #e0c595 100%);
-}
-.card.party .time-badge {
-  background: linear-gradient(135deg, var(--muted-purple) 0%, #ccb8e5 100%);
-}
-.card.culture .time-badge {
-  background: linear-gradient(135deg, var(--rose-gold) 0%, #e0bbbb 100%);
-}
-
-h2 {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: var(--white);
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
-  line-height: 1.1;
-  padding: 4px 0;
-  transition: all 0.3s;
-}
-
-h2[contenteditable="true"]:hover {
-  background: rgba(143, 180, 214, 0.05);
-  padding: 4px 8px;
-  margin: 0 -8px 10px -8px;
-  border-radius: 4px;
-  cursor: text;
-}
-
-h2[contenteditable="true"]:focus {
-  outline: none;
-  background: rgba(143, 180, 214, 0.1);
-  box-shadow: inset 0 0 0 1px var(--steel-blue);
-}
-
-.location {
-  font-size: 0.9rem;
-  color: var(--ice-blue);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
-  padding: 2px 0;
-  transition: all 0.3s;
-}
-
-.location[contenteditable="true"]:hover {
-  background: rgba(127, 199, 217, 0.05);
-  padding: 2px 8px;
-  margin: 0 -8px 14px -8px;
-  border-radius: 4px;
-  cursor: text;
-}
-
-.location[contenteditable="true"]:focus {
-  outline: none;
-  background: rgba(127, 199, 217, 0.1);
-  box-shadow: inset 0 0 0 1px var(--soft-cyan);
-}
-
-.details {
-  background: rgba(42, 42, 42, 0.4);
-  padding: 16px;
-  border-radius: 8px;
-  margin-top: 14px;
-  font-size: 0.9rem;
-  line-height: 1.8;
-  border-left: 2px solid #3a3a3a;
-  color: var(--light-gray);
-  transition: all 0.3s;
-}
-
-.card.dining .details { border-left-color: rgba(127, 199, 217, 0.3); }
-.card.dance .details { border-left-color: rgba(212, 175, 122, 0.3); }
-.card.party .details { border-left-color: rgba(184, 159, 217, 0.3); }
-.card.culture .details { border-left-color: rgba(212, 165, 165, 0.3); }
-
-.details[contenteditable="true"]:hover {
-  background: rgba(42, 42, 42, 0.7);
-  border-left-color: var(--steel-blue);
-  cursor: text;
-}
-
-.details[contenteditable="true"]:focus {
-  outline: none;
-  background: rgba(42, 42, 42, 0.9);
-  border-left-color: var(--steel-blue);
-  box-shadow: inset 0 0 0 1px rgba(143, 180, 214, 0.2);
-}
-
-/* === BUTTONS === */
-.action-btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin-top: 16px;
-  background: var(--steel-blue);
-  border: none;
-  color: var(--pure-black);
-  text-align: center;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 700;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.card.dining .action-btn { background: var(--soft-cyan); }
-.card.dance .action-btn { background: var(--warm-gold); }
-.card.party .action-btn { background: var(--muted-purple); }
-.card.culture .action-btn { background: var(--rose-gold); }
-
-.action-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.action-btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(143, 180, 214, 0.3);
-  filter: brightness(1.15);
-}
-
-.action-btn:active {
-  transform: translateY(0);
-}
-
-.copy-btn {
-  background: var(--darker-gray);
-  color: var(--steel-blue);
-  border: 1px solid rgba(143, 180, 214, 0.3);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.copy-btn:hover {
-  background: var(--steel-blue);
-  color: var(--pure-black);
-  transform: scale(1.05);
-}
-
-.copy-btn.copied {
-  background: var(--warm-gold);
-  color: var(--pure-black);
-  border-color: var(--warm-gold);
-  transform: scale(1);
-}
-
-/* Editable element cursor hints */
-[contenteditable="true"] {
-  cursor: text;
-  position: relative;
-  transition: all 0.3s;
-}
-
-[contenteditable="true"]:hover {
-  background: rgba(143, 180, 214, 0.05);
-  border-radius: 4px;
-}
-
-[contenteditable="true"]:focus {
-  outline: 2px solid rgba(143, 180, 214, 0.25);
-  outline-offset: 2px;
-  background: rgba(143, 180, 214, 0.08);
-  border-radius: 4px;
-}
-
-/* Inline Edit Fields */
-.inline-edit-field {
-  background: rgba(143, 180, 214, 0.08);
-  border: none;
-  border-bottom: 2px solid rgba(143, 180, 214, 0.4);
-  color: var(--white);
-  font-family: inherit;
-  font-size: inherit;
-  padding: 4px 8px;
-  border-radius: 4px 4px 0 0;
-  transition: all 0.3s;
-}
-
-.inline-edit-field:focus {
-  outline: none;
-  background: rgba(143, 180, 214, 0.15);
-  border-bottom-color: var(--ice-blue);
-  box-shadow: 0 4px 8px rgba(143, 180, 214, 0.15);
-}
-
-.inline-edit-field::placeholder {
-  color: var(--gray);
-  opacity: 0.6;
-}
-
-/* Reminder boxes */
-.reminder-box, .med-reminder {
-  background: rgba(184, 159, 217, 0.12);
-  border: 1px solid rgba(184, 159, 217, 0.25);
-  padding: 14px;
-  border-radius: 8px;
-  margin-top: 14px;
-  font-size: 0.85rem;
-  line-height: 1.7;
-  color: var(--light-gray);
-}
-
-.med-reminder {
-  background: rgba(143, 180, 214, 0.12);
-  border-color: rgba(143, 180, 214, 0.25);
-}
-
-/* Info boxes */
-.info-box {
-  background: var(--dark-card);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.intentions-box {
-  background: linear-gradient(135deg, rgba(184, 159, 217, 0.12) 0%, rgba(143, 180, 214, 0.12) 100%);
-  border-left: 3px solid var(--muted-purple);
-  padding: 22px;
-  border-radius: 10px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(184, 159, 217, 0.2);
-  border-left: 3px solid var(--muted-purple);
-  position: relative;
-  overflow: hidden;
-}
-
-.intentions-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(184, 159, 217, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Section Titles */
-.section-title {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 900;
-  margin: 32px 0 18px;
-  color: var(--steel-blue);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  opacity: 0.9;
-}
-
-.section-title:first-child {
-  margin-top: 0;
-}
-
-/* === TIMELINE === */
-.timeline-container {
-  position: relative;
-  padding: 20px 0;
-}
-
-.timeline-item {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 12px;
-  position: relative;
-  align-items: center;
-}
-
-.timeline-item:not(:last-child)::before {
-  content: '';
-  position: absolute;
-  left: 13px;
-  top: 34px;
-  bottom: -12px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--steel-blue) 0%, rgba(143, 180, 214, 0.15) 100%);
-}
-
-.timeline-dot {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--dark-card);
-  flex-shrink: 0;
-  margin-top: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 0.5px;
-  animation: dotGlow 4s ease-in-out infinite;
-}
-
-@keyframes dotGlow {
-  0%, 100% { box-shadow: 0 0 6px rgba(143, 180, 214, 0.2); }
-  50% { box-shadow: 0 0 16px rgba(143, 180, 214, 0.5), 0 0 24px rgba(143, 180, 214, 0.2); }
-}
-
-.timeline-item:nth-child(1) .timeline-dot {
-  border: 2px solid var(--soft-cyan);
-}
-.timeline-item:nth-child(2) .timeline-dot {
-  border: 2px solid var(--muted-purple);
-  animation-delay: -1.3s;
-}
-.timeline-item:nth-child(3) .timeline-dot {
-  border: 2px solid var(--rose-gold);
-  animation-delay: -2.6s;
-}
-
-.timeline-content {
-  flex-grow: 1;
-  background: var(--dark-card);
-  padding: 16px 18px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s;
-}
-
-.timeline-content:hover {
-  border-color: rgba(143, 180, 214, 0.15);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-.timeline-day {
-  display: none;
-}
-
-.timeline-summary {
-  font-size: 1rem;
-  color: var(--white);
-  line-height: 1.6;
-  font-weight: 600;
-}
-
-.event-link {
-  cursor: pointer;
-  transition: all 0.3s;
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  border-bottom: 1px solid rgba(143, 180, 214, 0.2);
-}
-
-.event-link:hover {
-  color: var(--steel-blue);
-  background: rgba(143, 180, 214, 0.1);
-  transform: translateY(-1px);
-  text-shadow: 0 0 12px rgba(143, 180, 214, 0.4);
-  border-bottom-color: var(--steel-blue);
-}
-
-/* === QUICK ACTIONS === */
-.quick-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 32px;
-  padding: 20px 0;
-  justify-items: center;
-}
-
-.quick-action-btn {
-  background: transparent;
-  border: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.quick-action-btn:hover {
-  transform: scale(1.1);
-}
-
-.quick-action-btn:active {
-  transform: scale(0.95);
-}
-
-.qa-icon-wrapper {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: var(--darker-gray);
-  border: 2px solid rgba(143, 180, 214, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--white);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  position: relative;
-}
-
-/* Subtle pulsing ring around quick action icons */
-.qa-icon-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px solid rgba(143, 180, 214, 0.1);
-  animation: ringPulse 3s ease-in-out infinite;
-}
-
-@keyframes ringPulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.08); opacity: 0.6; }
-}
-
-.quick-action-btn:hover .qa-icon-wrapper {
-  border-color: var(--ice-blue);
-  box-shadow: 0 8px 32px rgba(143, 180, 214, 0.25), 0 0 24px rgba(143, 180, 214, 0.15);
-  background: var(--dark-card);
-}
-
-.qa-label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--gray);
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.3;
-  transition: all 0.3s;
-}
-
-.quick-action-btn:hover .qa-label {
-  color: var(--steel-blue);
-}
-
-/* === BUDGET TRACKER === */
-.budget-summary {
-  background: linear-gradient(135deg, rgba(184, 159, 217, 0.08) 0%, rgba(143, 180, 214, 0.08) 100%);
-  color: white;
-  padding: 28px;
-  border-radius: 14px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(184, 159, 217, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.budget-summary::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(143, 180, 214, 0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.budget-total {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 2.8rem;
-  font-weight: 900;
-  margin-bottom: 8px;
-  letter-spacing: -1px;
-  text-shadow: 0 0 20px rgba(143, 180, 214, 0.25);
-  transition: all 0.4s;
-}
-
-.budget-label {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  color: var(--light-gray);
-}
-
-.budget-category {
-  background: var(--dark-card);
-  padding: 16px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.budget-cat-name {
-  font-weight: 600;
-  color: var(--white);
-}
-
-.budget-cat-amount {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--steel-blue);
-}
-
-.expense-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: rgba(26, 26, 26, 0.5);
-  border-radius: 8px;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  transition: all 0.3s;
-}
-
-.expense-item:hover {
-  border-color: rgba(143, 180, 214, 0.15);
-  background: rgba(26, 26, 26, 0.8);
-}
-
-.editable-expense {
-  padding: 8px 12px;
-}
-
-.expense-name {
-  color: var(--light-gray);
-}
-
-.expense-amount {
-  font-weight: 600;
-  color: var(--ice-blue);
-}
-
-.expense-name-input {
-  background: transparent;
-  border: none;
-  color: var(--light-gray);
-  font-size: 0.9rem;
-  font-family: inherit;
-  flex-grow: 1;
-  padding: 4px 0;
-}
-
-.expense-name-input:focus {
-  outline: none;
-}
-
-.expense-amount-input {
-  background: var(--darker-gray);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--steel-blue);
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  padding: 6px 12px;
-  border-radius: 6px;
-  width: 100px;
-  text-align: right;
-  transition: all 0.3s;
-}
-
-.expense-amount-input:focus {
-  outline: none;
-  border-color: var(--steel-blue);
-  box-shadow: 0 0 10px rgba(143, 180, 214, 0.15);
-  background: var(--dark-card);
-}
-
-.expense-amount-input:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-/* === CHECKLIST === */
-.checklist {
-  list-style: none;
-}
-
-.checklist li {
-  padding: 12px;
-  margin-bottom: 8px;
-  background: var(--dark-card);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-}
-
-.checklist li:has(input:checked) {
-  background: rgba(143, 180, 214, 0.04);
-  border-color: rgba(143, 180, 214, 0.15);
-  opacity: 0.6;
-  text-decoration: line-through;
-  text-decoration-color: var(--gray);
-}
-
-.pack-checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: var(--steel-blue);
-  flex-shrink: 0;
-}
-
-.checklist-category {
-  font-weight: 700;
-  font-size: 0.85rem;
-  margin: 24px 0 12px;
-  color: var(--steel-blue);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.checklist-progress {
-  background: var(--dark-card);
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.progress-bar-container {
-  background: var(--pure-black);
-  height: 12px;
-  border-radius: 6px;
-  overflow: hidden;
-  margin: 12px 0;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--steel-blue) 0%, var(--ice-blue) 50%, var(--warm-gold) 100%);
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 6px;
-  position: relative;
-  box-shadow: 0 0 8px rgba(143, 180, 214, 0.3);
-}
-
-.progress-text {
-  font-size: 0.85rem;
-  color: var(--gray);
-  text-align: center;
-}
-
-/* Travel Info */
-.travel-toggle {
-  background: transparent;
-  border: 1px solid rgba(143, 180, 214, 0.3);
-  color: var(--steel-blue);
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  width: 100%;
-}
-
-.travel-toggle:hover {
-  background: var(--steel-blue);
-  color: var(--pure-black);
-}
-
-.travel-info {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-  margin-top: 12px;
-  background: rgba(143, 180, 214, 0.03);
-  border-radius: 8px;
-  border: 1px solid transparent;
-}
-
-.travel-info.show {
-  max-height: 500px;
-  padding: 16px;
-  border-color: rgba(143, 180, 214, 0.15);
-}
-
-/* Day Header */
-.day-header {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(143, 180, 214, 0.2);
-  box-shadow: 0 2px 20px rgba(143, 180, 214, 0.06);
-}
-
-.day-title {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: var(--white);
-  margin-bottom: 8px;
-  letter-spacing: -1px;
-  text-transform: uppercase;
-  text-shadow: 0 0 24px rgba(143, 180, 214, 0.2);
-}
-
-.day-subtitle {
-  color: var(--gray);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-/* Alert boxes */
-.alert-box {
-  background: rgba(143, 180, 214, 0.05);
-  border: 1px solid rgba(143, 180, 214, 0.2);
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.alert-title {
-  color: var(--steel-blue);
-  font-weight: 700;
-  margin-bottom: 12px;
-  font-size: 1.05rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 600px) {
-  h1 { font-size: 2.2rem; }
-  .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 380px) {
-  h1 { font-size: 1.8rem; letter-spacing: -1px; }
-  .subtitle { letter-spacing: 3px; font-size: 0.75rem; }
-  .card-body { padding: 20px; }
-  .nav-tabs { gap: 4px; padding: 6px; }
-  .tab-btn { font-size: 0.65rem; padding: 10px 2px; }
-}
-</style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -1290,6 +18,7 @@ h2[contenteditable="true"]:focus {
 <header>
   <div class="disco-container">
     <span class="header-emoji">🪩</span>
+    <div class="disco-ring"></div>
     <span class="light-scatter"></span>
     <span class="light-scatter"></span>
     <span class="light-scatter"></span>
@@ -1302,13 +31,13 @@ h2[contenteditable="true"]:focus {
   <div class="countdown" id="countdown"></div>
 </header>
 
-<!-- Navigation -->
+<!-- Navigation: Home, Friday, Saturday, Sunday, Budget, Pack -->
 <nav class="nav-tabs">
   <button class="tab-btn active" onclick="openTab('tab-home', this)">Home</button>
-  <button class="tab-btn" onclick="openTab('tab-budget', this)">Budget</button>
   <button class="tab-btn" onclick="openTab('tab-fri', this)">Friday</button>
   <button class="tab-btn" onclick="openTab('tab-sat', this)">Saturday</button>
   <button class="tab-btn" onclick="openTab('tab-sun', this)">Sunday</button>
+  <button class="tab-btn" onclick="openTab('tab-budget', this)">Budget</button>
   <button class="tab-btn" onclick="openTab('tab-checklist', this)">Pack</button>
 </nav>
 
@@ -1321,7 +50,7 @@ h2[contenteditable="true"]:focus {
       <div class="timeline-content">
         <div class="timeline-day">Friday</div>
         <div class="timeline-summary">
-          <span class="event-link" onclick="scrollToEvent('tab-fri', 'event-film')">Film</span> →
+          <span class="event-link" onclick="scrollToEvent('tab-fri', 'event-checkin')">Check In</span> →
           <span class="event-link" onclick="scrollToEvent('tab-fri', 'event-holywater')">Holywater</span> →
           <span class="event-link" onclick="scrollToEvent('tab-fri', 'event-bars')">Bars</span> →
           <span class="event-link" onclick="scrollToEvent('tab-fri', 'event-nocturnal')">Nocturnal</span>
@@ -1348,7 +77,7 @@ h2[contenteditable="true"]:focus {
         <div class="timeline-summary">
           <span class="event-link" onclick="scrollToEvent('tab-sun', 'event-brunch')">Brunch</span> →
           <span class="event-link" onclick="scrollToEvent('tab-sun', 'event-ballet')">Ballet</span> →
-          <span class="event-link" onclick="scrollToEvent('tab-sun', 'event-maxbrenner')">Max Brenner</span> →
+          <span class="event-link" onclick="scrollToEvent('tab-sun', 'event-birthday-dinner')">Birthday Dinner</span> →
           <span class="event-link" onclick="scrollToEvent('tab-sun', 'event-cock')">The Cock</span>
         </div>
       </div>
@@ -1362,7 +91,7 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="qa-label">Ride</span>
     </button>
-    <button class="quick-action-btn" onclick="copyToClipboard('Hilton Brooklyn, Downtown Brooklyn')">
+    <button class="quick-action-btn" onclick="copyToClipboard('252 Schermerhorn St, Brooklyn, NY 11217')">
       <div class="qa-icon-wrapper">
         <span style="font-size: 2.5rem;">📍</span>
       </div>
@@ -1374,54 +103,72 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="qa-label">Emergency</span>
     </button>
-    <button class="quick-action-btn" onclick="openTab('tab-budget', document.querySelectorAll('.tab-btn')[1])">
+    <button class="quick-action-btn" onclick="window.open('https://new.mta.info/', '_blank')">
       <div class="qa-icon-wrapper">
-        <span style="font-size: 2.5rem;">💳</span>
+        <span style="font-size: 2.5rem;">🚇</span>
       </div>
-      <span class="qa-label">Budget</span>
+      <span class="qa-label">MTA</span>
     </button>
   </div>
 
   <div class="intentions-box">
-    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-      <span style="font-size: 1.8rem;">🤎</span>
-      <strong style="font-size: 1.05rem;">Show up authentically</strong>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+      <span style="font-size: 1.8rem;">💜</span>
+      <strong style="font-size: 1.05rem;">Intentions for This Trip</strong>
     </div>
-    <ul style="list-style: none; line-height: 2; color: var(--light-gray); font-size: 0.95rem;">
-      <li>· Dance like no one's watching—because they're all watching themselves in the mirror</li>
-      <li>· Make space for spontaneity</li>
-      <li>· Connect with your community</li>
-      <li>· Celebrate your growth and your journey</li>
+    <ul style="list-style: none; line-height: 2.2; color: var(--light-gray); font-size: 0.95rem;">
+      <li>· Let love guide the way</li>
+      <li>· Dance full out and find that peace within movement</li>
+      <li>· Truly experience the city</li>
+      <li>· Make a new friend and find community</li>
+      <li>· Know that you're beautiful, hot, and desirable</li>
     </ul>
   </div>
 
   <div class="info-box">
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 0.9rem;">
-      <div><strong style="color: var(--soft-cyan);">Thu:</strong> 39°F, Partly Cloudy</div>
-      <div><strong style="color: var(--ice-blue);">Fri:</strong> 43°F, Mostly Cloudy</div>
-      <div><strong style="color: var(--muted-purple);">Sat:</strong> 41°F, Rain (60%)</div>
-      <div><strong style="color: var(--rose-gold);">Sun:</strong> 45°F, Partly Cloudy</div>
+      <div><strong style="color: var(--soft-cyan);">Thu:</strong> 39°F ❄️⛅</div>
+      <div><strong style="color: var(--ice-blue);">Fri:</strong> 43°F 🌤️☁️</div>
+      <div><strong style="color: var(--muted-purple);">Sat:</strong> 41°F 🌧️☔</div>
+      <div><strong style="color: var(--rose-gold);">Sun:</strong> 45°F ⛅🌤️</div>
     </div>
     <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #2a2a2a; color: var(--gray); font-size: 0.85rem;">
-      Rain likely Saturday — bring umbrella!
+      ☔ Rain likely Saturday — bring an umbrella! 🌂
     </div>
   </div>
 
-  <div class="info-box" style="margin-bottom: 12px;">
-    <strong style="color: var(--steel-blue); font-size: 1.05rem;">Arrival — Thursday</strong><br>
-    <span style="color: var(--gray);">AA1583 · DEN → EWR</span><br>
-    <div style="margin-top: 8px; color: var(--white);">
-      Departs: 4:55 PM · Arrives: 10:30 PM<br>
-      Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;"> · Seat: <input type="text" class="inline-edit-field" value="18F" style="width: 50px;">
+  <!-- Flight Event Cards -->
+  <div class="card travel" id="event-arrival">
+    <div class="card-body">
+      <span class="time-badge">4:55 PM → 10:30 PM</span>
+      <h2>✈️ Arrival — Thursday</h2>
+      <div class="location">
+        AA1583 · DEN → LGA
+      </div>
+      <div class="details">
+        <strong>Thursday, February 19, 2026</strong><br>
+        Departs Denver: 4:55 PM<br>
+        Arrives LaGuardia: 10:30 PM<br><br>
+        Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;"> · Seat: <input type="text" class="inline-edit-field" value="18F" style="width: 50px;"><br><br>
+        <strong>Getting to hotel:</strong> Uber from LGA → Ace Hotel Brooklyn (~35-45 min, $45-60)
+      </div>
     </div>
   </div>
 
-  <div class="info-box" style="margin-bottom: 12px;">
-    <strong style="color: var(--rose-gold); font-size: 1.05rem;">Departure — Monday</strong><br>
-    <span style="color: var(--gray);">AA1418 · EWR → DEN</span><br>
-    <div style="margin-top: 8px; color: var(--white);">
-      Departs: 10:00 AM · Arrives: 12:35 PM<br>
-      Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;">
+  <div class="card travel" id="event-departure">
+    <div class="card-body">
+      <span class="time-badge">10:00 AM → 12:35 PM</span>
+      <h2>✈️ Departure — Monday</h2>
+      <div class="location">
+        AA1418 · LGA → DEN
+      </div>
+      <div class="details">
+        <strong>Monday, February 23, 2026</strong><br>
+        Departs LaGuardia: 10:00 AM<br>
+        Arrives Denver: 12:35 PM<br><br>
+        Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;"><br><br>
+        <strong>Leave hotel by 7:30 AM</strong> — Uber to LGA (~35-45 min + security buffer)
+      </div>
     </div>
   </div>
 
@@ -1437,130 +184,51 @@ h2[contenteditable="true"]:focus {
 
 </div>
 
-<!-- BUDGET TAB -->
-<div id="tab-budget" class="tab-content">
-  <div class="day-header">
-    <div class="day-title">Budget</div>
-    <div class="day-subtitle">Planned expenses for the trip</div>
-  </div>
-
-  <div class="budget-summary">
-    <div class="budget-total" id="budget-total">$2,105</div>
-    <div class="budget-label">Total Planned Budget</div>
-  </div>
-
-  <h3 class="section-title">Accommodation</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Hilton Brooklyn (4 nights)" readonly>
-    <input type="number" class="expense-amount-input" value="550" onchange="updateBudgetTotal()">
-  </div>
-
-  <h3 class="section-title">Birthday Celebrations</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Dinner with Marissa & Grant" readonly>
-    <input type="number" class="expense-amount-input" value="500" onchange="updateBudgetTotal()">
-  </div>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Birthday Dinner (Holywater)" readonly>
-    <input type="number" class="expense-amount-input" value="200" onchange="updateBudgetTotal()">
-  </div>
-
-  <h3 class="section-title">Dance Classes</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Ailey Extension - Vogue Class" readonly>
-    <input type="number" class="expense-amount-input" value="25" onchange="updateBudgetTotal()">
-  </div>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Broadway Dance Center - Vogue" readonly>
-    <input type="number" class="expense-amount-input" value="25" onchange="updateBudgetTotal()">
-  </div>
-
-  <h3 class="section-title">Experiences</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="MoMA Museum Entry" readonly>
-    <input type="number" class="expense-amount-input" value="30" onchange="updateBudgetTotal()">
-  </div>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="NYC Ballet - Sleeping Beauty" readonly>
-    <input type="number" class="expense-amount-input" value="75" onchange="updateBudgetTotal()">
-  </div>
-
-  <h3 class="section-title">Shopping</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Trip Outfit/Bag/Accessory" readonly>
-    <input type="number" class="expense-amount-input" value="350" onchange="updateBudgetTotal()">
-  </div>
-
-  <h3 class="section-title">Nightlife & Drinks</h3>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Friday Night (Bars + Nocturnal)" readonly>
-    <input type="number" class="expense-amount-input" value="150" onchange="updateBudgetTotal()">
-  </div>
-  <div class="expense-item editable-expense">
-    <input type="text" class="expense-name-input" value="Saturday Night (BASEMENT)" readonly>
-    <input type="number" class="expense-amount-input" value="200" onchange="updateBudgetTotal()">
-  </div>
-
-  <button class="action-btn" onclick="addBudgetItem()" style="margin-top: 20px; margin-bottom: 32px;">
-    + Add Expense
-  </button>
-
-  <div id="custom-expenses-container"></div>
-
-  <h3 class="section-title">Surprise Element</h3>
-  <div class="info-box" style="margin-top: 12px; margin-bottom: 24px;">
-    <strong style="color: var(--warm-gold);">Something in the window</strong><br>
-    <span style="color: var(--gray); font-size: 0.9rem;">Low pressure — if you see something special, go for it! This is your birthday trip.</span>
-  </div>
-
-  <div class="info-box" style="background: rgba(143, 180, 214, 0.04); border: 1px solid rgba(143, 180, 214, 0.2);">
-    <strong>Budget Notes:</strong><br><br>
-    <em style="font-size: 0.9rem; color: var(--light-gray); line-height: 1.6;">
-      · All amounts are editable — tap any number to adjust<br>
-      · Total automatically updates as you edit<br>
-      · Consider additional padding for taxis, tips, and spontaneous moments<br>
-      · Recommended total with buffer: $2,300–2,500
-    </em>
-  </div>
-</div>
-
 <!-- FRIDAY TAB -->
 <div id="tab-fri" class="tab-content">
   <div class="day-header">
     <div class="day-title">Friday</div>
-    <div class="day-subtitle">Film → Dinner → Bars → Nocturnal</div>
+    <div class="day-subtitle">Check In → Explore → Dinner → Bars → Nocturnal</div>
   </div>
 
   <div class="reminder-box" style="margin-bottom: 20px;">
     <strong>Start your day:</strong> Take morning medicine with breakfast.
   </div>
 
-  <div class="card culture" id="event-film">
+  <div class="card travel" id="event-checkin">
     <div class="card-body">
-      <span class="time-badge">5:00 PM</span>
-      <h2>Film Forum</h2>
+      <span class="time-badge">Morning / Early Afternoon</span>
+      <h2>🏨 Check In — Ace Hotel Brooklyn</h2>
       <div class="location">
-        209 W Houston St, West Village
-        <button class="copy-btn" onclick="copyToClipboard('209 W Houston St, New York, NY')">Copy</button>
+        252 Schermerhorn St, Boerum Hill
+        <button class="copy-btn" onclick="copyToClipboard('252 Schermerhorn St, Brooklyn, NY 11217')">Copy</button>
       </div>
       <div class="details">
-        <strong>Independent Cinema</strong><br>
-        One of NYC's premier independent theaters showcasing arthouse films, documentaries, and repertory classics.<br><br>
-        Check their website for current screenings and showtimes.<br><br>
-        <em>Arrive 15 minutes early to grab good seats and explore the vintage theater vibe!</em>
+        <strong>Arrive & Settle In</strong><br>
+        Uber from LaGuardia → Ace Hotel Brooklyn (~35-45 min)<br><br>
+        · Drop off bags and freshen up<br>
+        · Explore the hotel lobby and lounge<br>
+        · Grab coffee at the Ace's lobby bar<br><br>
+        <em>You made it to NYC! Take a moment to breathe and soak it in.</em>
       </div>
-      <div class="reminder-box">
-        <strong>Pro tip:</strong> Film Forum doesn't take reservations — it's first come, first served. Weekend evenings can get busy!
+      <a href="https://maps.google.com/?q=252+Schermerhorn+St+Brooklyn+NY+11217" target="_blank" class="action-btn">Open in Maps</a>
+    </div>
+  </div>
+
+  <div class="card culture" id="event-explore">
+    <div class="card-body">
+      <span class="time-badge">Afternoon — Before Dinner</span>
+      <h2>Explore Brooklyn</h2>
+      <div class="location">
+        Near Ace Hotel, Boerum Hill / Downtown Brooklyn
       </div>
-      <button class="travel-toggle" onclick="toggleTravel('fri-1')">
-        Travel Info →
-      </button>
-      <div id="fri-1" class="travel-info">
-        <strong>Hilton Brooklyn → Film Forum:</strong><br>
-        Take 2/3 train to Houston St (~25-30 min). Walk to theater.<br><br>
-        <strong>Leave hotel by 4:20 PM</strong> to arrive with buffer for ticket purchase.
+      <div class="details">
+        <strong>Things to do before dinner:</strong><br><br>
+        · <strong>Brooklyn Bridge Walk</strong> — 15 min walk from hotel, iconic views of Manhattan skyline<br>
+        · <strong>Brooklyn Heights Promenade</strong> — Stunning waterfront views, perfect for photos<br>
+        · <strong>Smith Street stroll</strong> — Boutiques, cafes, and galleries in Boerum Hill<br><br>
+        <em>Keep it low-key — save your energy for tonight!</em>
       </div>
-      <a href="https://maps.google.com/?q=209+W+Houston+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
   </div>
 
@@ -1587,9 +255,9 @@ h2[contenteditable="true"]:focus {
         Travel Info →
       </button>
       <div id="fri-2" class="travel-info">
-        <strong>Film Forum → Holywater:</strong><br>
-        Walk south on 6th Ave to Canal, then walk west to Reade St (~15 min walk). Or take 1 train from Houston to Franklin St (~8 min).<br><br>
-        <strong>Leave Film Forum by 7:00 PM</strong> to arrive on time for reservation.
+        <strong>Ace Hotel → Holywater:</strong><br>
+        Take A/C train from Hoyt-Schermerhorn to Chambers St (~15 min), then walk south to Reade St. Or Uber (~20 min, $20-30).<br><br>
+        <strong>Leave hotel by 6:45 PM</strong> to arrive on time for reservation.
       </div>
       <a href="https://maps.google.com/?q=112+Reade+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -1669,7 +337,7 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="time-badge">End of Night</span>
       <h2>Back to Hotel</h2>
-      <div class="location">Hilton Brooklyn</div>
+      <div class="location">Ace Hotel Brooklyn</div>
       <div class="details">
         Head back to hotel to rest up for tomorrow's busy day. Don't forget to take your medicine and pack your dance bag for Saturday's vogue classes!
       </div>
@@ -1712,8 +380,8 @@ h2[contenteditable="true"]:focus {
         Travel Info →
       </button>
       <div id="sat-1" class="travel-info">
-        <strong>Hilton Brooklyn → Broadway Dance Center:</strong><br>
-        Take 2/3 train to Times Square-42nd St, walk west on 45th St to 9th Ave (~35-40 min total).<br><br>
+        <strong>Ace Hotel → Broadway Dance Center:</strong><br>
+        Take A/C from Hoyt-Schermerhorn to 42nd St-Port Authority, walk west on 45th St to 9th Ave (~30-35 min total).<br><br>
         <strong>Leave hotel by 11:10 AM</strong> to arrive with buffer for check-in and changing.
       </div>
       <a href="https://maps.google.com/?q=322+W+45th+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
@@ -1771,7 +439,7 @@ h2[contenteditable="true"]:focus {
   <div class="card dance" id="event-vogue2">
     <div class="card-body">
       <span class="time-badge">3:30 PM – 5:00 PM</span>
-      <h2>Vogue Basics + Absolute Beginner</h2>
+      <h2>Vogue Basics</h2>
       <div class="location">
         Ailey Extension, 405 W 55th St
         <button class="copy-btn" onclick="copyToClipboard('405 W 55th St, New York, NY')">Copy</button>
@@ -1838,7 +506,7 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="time-badge">9:45 PM</span>
       <h2>Hotel Pit Stop</h2>
-      <div class="location">Hilton Brooklyn</div>
+      <div class="location">Ace Hotel Brooklyn</div>
       <div class="details">
         Quick stop at hotel to:<br>
         · Take party medicine<br>
@@ -1877,7 +545,7 @@ h2[contenteditable="true"]:focus {
         Travel Info →
       </button>
       <div id="sat-3" class="travel-info">
-        <strong>Hotel → BASEMENT:</strong><br>
+        <strong>Ace Hotel → BASEMENT:</strong><br>
         Uber/Lyft strongly recommended (~25-30 min, $25-35). BASEMENT is in an industrial area with limited late-night transit options.<br><br>
         <strong>Leave hotel by 10:40 PM</strong> to arrive by 11:15 PM.
       </div>
@@ -1892,7 +560,7 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="time-badge">End of Night</span>
       <h2>Back to Hotel</h2>
-      <div class="location">Hilton Brooklyn</div>
+      <div class="location">Ace Hotel Brooklyn</div>
       <div class="details">
         Rest up! Big day tomorrow with ballet, dinner, and one more night out.
       </div>
@@ -1905,7 +573,7 @@ h2[contenteditable="true"]:focus {
 <div id="tab-sun" class="tab-content">
   <div class="day-header">
     <div class="day-title">Sunday</div>
-    <div class="day-subtitle">Recovery → Ballet → Dinner → Grand Finale</div>
+    <div class="day-subtitle">Recovery → Ballet → Birthday Dinner → Grand Finale</div>
   </div>
 
   <div class="reminder-box" style="margin-bottom: 20px;">
@@ -1940,8 +608,8 @@ h2[contenteditable="true"]:focus {
         Travel Info →
       </button>
       <div id="sun-0" class="travel-info">
-        <strong>Hotel → Brunch spots:</strong><br>
-        Take L train from Bedford Ave (for Williamsburg spots) or continue to 1st Ave (for LES spots). All options are 15-25 min from hotel and walkable from L train stops.<br><br>
+        <strong>Ace Hotel → Brunch spots:</strong><br>
+        Take G train from Hoyt-Schermerhorn to Metropolitan Ave (for Williamsburg spots) or A/C to Broadway Junction, transfer to J/M (for LES spots). All options are 20-30 min from hotel.<br><br>
         <strong>Leave hotel by 10:30 AM</strong> to arrive comfortably by 11:00 AM.
       </div>
       <a href="https://maps.google.com/?q=Bedford+Ave+Brooklyn+NY" target="_blank" class="action-btn">Open in Maps</a>
@@ -1978,35 +646,36 @@ h2[contenteditable="true"]:focus {
     </div>
   </div>
 
-  <div class="card dining" id="event-maxbrenner">
+  <div class="card dining" id="event-birthday-dinner">
     <div class="card-body">
-      <span class="time-badge">7:00 PM</span>
-      <h2>Max Brenner — Union Square</h2>
+      <span class="time-badge">6:30 PM – 8:30 PM</span>
+      <h2>Birthday Dinner</h2>
       <div class="location">
-        841 Broadway, Union Square
-        <button class="copy-btn" onclick="copyToClipboard('841 Broadway, New York, NY')">Copy</button>
+        Near Lincoln Center, Upper West Side
       </div>
       <div class="details">
-        <strong>Chocolate Restaurant Experience</strong><br>
-        The ultimate chocolate-themed dinner! Max Brenner is famous for their chocolate dishes, drinks, and desserts. It's indulgent, playful, and delicious.<br><br>
-        <strong>Reservation Confirmed</strong><br>
-        Sunday, February 22, 2026 at 7:00 PM<br>
-        Table for 1 · Confirmation #674363<br>
-        Name: Khylil Chestnut<br><br>
-        <em>Save room for dessert — the chocolate fondue and hot chocolate are legendary!</em>
+        <strong>Post-Ballet Birthday Celebration</strong><br>
+        Exquisite solo dining near Lincoln Center. You deserve something special!<br><br>
+        <strong>Top Recommendations:</strong><br><br>
+        · <strong>Bar Boulud</strong> — 1900 Broadway (right across from Lincoln Center)<br>
+        Chef Daniel Boulud's French bistro & wine bar. Incredible charcuterie, terrines, and wine list. Bar seating is perfect for solo dining. $80-150<br><br>
+        · <strong>Lincoln Ristorante</strong> — 142 W 65th St (on the Lincoln Center campus)<br>
+        Elegant Italian fine dining with gorgeous interior. Bar seating welcomes solo guests. $100-180<br><br>
+        · <strong>Café Luxembourg</strong> — 200 W 70th St<br>
+        Classic Upper West Side French bistro, warm and inviting. Comfortable for solo diners, beloved by locals for decades. $80-130<br><br>
+        <em>All three are walking distance from Lincoln Center, solo-friendly, and exquisite — choose based on your mood after the ballet!</em>
       </div>
       <div class="reminder-box">
-        <strong>Post-ballet treat:</strong> After the elegant ballet, this is pure fun and indulgence. Come hungry and ready to enjoy yourself!
+        <strong>Solo dining tip:</strong> Sit at the bar — you'll get great service, can chat with the bartender, and it's the most comfortable spot for a solo birthday celebration. Don't be shy about telling them it's your birthday!
       </div>
       <button class="travel-toggle" onclick="toggleTravel('sun-2')">
         Travel Info →
       </button>
       <div id="sun-2" class="travel-info">
-        <strong>Lincoln Center → Union Square:</strong><br>
-        Take 1 train downtown from 66th St to 14th St-Union Square (~12 min). Walk east on 14th St to Broadway.<br><br>
-        <strong>Leave Lincoln Center by 6:30 PM</strong> to arrive on time for reservation.
+        <strong>Lincoln Center → Restaurants:</strong><br>
+        All three options are within a 5-minute walk of Lincoln Center. Bar Boulud is literally across the street. Lincoln Ristorante is on campus. Café Luxembourg is a short walk north on Amsterdam Ave.<br><br>
+        <strong>Ballet ends ~5:30 PM</strong> — plenty of time to freshen up and walk over for a 6:30 PM dinner.
       </div>
-      <a href="https://maps.google.com/?q=841+Broadway+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
   </div>
 
@@ -2036,9 +705,9 @@ h2[contenteditable="true"]:focus {
         Travel Info →
       </button>
       <div id="sun-3" class="travel-info">
-        <strong>Union Square → The Cock:</strong><br>
-        Walk east on 14th St to 2nd Ave, then north a few blocks to E 5th St (~15 min walk). OR take L train one stop to 1st Ave, then walk 5 min.<br><br>
-        <strong>Leave Max Brenner by 11:15 PM</strong> to arrive by 11:30 PM.
+        <strong>Dinner → The Cock:</strong><br>
+        Take 1 train from 66th St downtown to Astor Place (~15 min), then walk east to 2nd Ave. Or Uber (~20 min, $20-30).<br><br>
+        <strong>Leave dinner by 11:00 PM</strong> to arrive by 11:30 PM.
       </div>
       <a href="https://maps.google.com/?q=93+2nd+Ave+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -2051,7 +720,7 @@ h2[contenteditable="true"]:focus {
       </div>
       <span class="time-badge">End of Night</span>
       <h2>Back to Hotel</h2>
-      <div class="location">Hilton Brooklyn</div>
+      <div class="location">Ace Hotel Brooklyn</div>
       <div class="details">
         Head back to hotel one last time. Rest up for your flight tomorrow morning!<br><br>
         <strong>Remember to pack:</strong><br>
@@ -2063,6 +732,102 @@ h2[contenteditable="true"]:focus {
     </div>
   </div>
 
+</div>
+
+<!-- BUDGET TAB (now after Sunday) -->
+<div id="tab-budget" class="tab-content">
+  <div class="day-header">
+    <div class="day-title">Budget</div>
+    <div class="day-subtitle">Planned expenses for the trip</div>
+  </div>
+
+  <div class="budget-summary">
+    <div class="budget-total" id="budget-total">$2,205</div>
+    <div class="budget-label">Total Planned Budget</div>
+  </div>
+
+  <h3 class="section-title">Accommodation</h3>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Ace Hotel Brooklyn (3 nights)" readonly>
+    <input type="number" class="expense-amount-input" value="550" onchange="updateBudgetTotal()">
+  </div>
+
+  <h3 class="section-title">Birthday Celebrations</h3>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Dinner with Marissa & Grant" readonly>
+    <input type="number" class="expense-amount-input" value="500" onchange="updateBudgetTotal()">
+  </div>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Birthday Dinner (Holywater)" readonly>
+    <input type="number" class="expense-amount-input" value="200" onchange="updateBudgetTotal()">
+  </div>
+
+  <h3 class="section-title">Dance Classes <span class="paid-badge">Paid</span></h3>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="Ailey Extension - Vogue Class" readonly>
+    <input type="number" class="expense-amount-input" value="25" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="Broadway Dance Center - Vogue" readonly>
+    <input type="number" class="expense-amount-input" value="25" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+
+  <h3 class="section-title">Experiences</h3>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="MoMA Museum Entry" readonly>
+    <input type="number" class="expense-amount-input" value="30" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="NYC Ballet - Sleeping Beauty" readonly>
+    <input type="number" class="expense-amount-input" value="75" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="World Dweller - Pioneer Works" readonly>
+    <input type="number" class="expense-amount-input" value="47" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+  <div class="expense-item editable-expense paid">
+    <input type="text" class="expense-name-input" value="BASEMENT Afterparty" readonly>
+    <input type="number" class="expense-amount-input" value="53" onchange="updateBudgetTotal()">
+    <span class="paid-badge">Paid</span>
+  </div>
+
+  <h3 class="section-title">Shopping</h3>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Trip Outfit/Bag/Accessory" readonly>
+    <input type="number" class="expense-amount-input" value="350" onchange="updateBudgetTotal()">
+  </div>
+
+  <h3 class="section-title">Nightlife & Drinks</h3>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Friday Night (Bars + Nocturnal)" readonly>
+    <input type="number" class="expense-amount-input" value="150" onchange="updateBudgetTotal()">
+  </div>
+  <div class="expense-item editable-expense">
+    <input type="text" class="expense-name-input" value="Saturday Night (BASEMENT)" readonly>
+    <input type="number" class="expense-amount-input" value="200" onchange="updateBudgetTotal()">
+  </div>
+
+  <button class="action-btn" onclick="addBudgetItem()" style="margin-top: 20px; margin-bottom: 32px;">
+    + Add Expense
+  </button>
+
+  <div id="custom-expenses-container"></div>
+
+  <div class="info-box" style="background: rgba(143, 180, 214, 0.04); border: 1px solid rgba(143, 180, 214, 0.2);">
+    <strong>Budget Notes:</strong><br><br>
+    <em style="font-size: 0.9rem; color: var(--light-gray); line-height: 1.6;">
+      · All amounts are editable — tap any number to adjust<br>
+      · Total automatically updates as you edit<br>
+      · Items marked "Paid" are already purchased<br>
+      · Consider additional padding for taxis, tips, and spontaneous moments<br>
+      · Recommended total with buffer: $2,100–2,300
+    </em>
+  </div>
 </div>
 
 <!-- CHECKLIST TAB -->
@@ -2164,287 +929,7 @@ h2[contenteditable="true"]:focus {
 
 </div>
 
-<script>
-function openTab(tabId, btnElement) {
-  const contents = document.querySelectorAll('.tab-content');
-  contents.forEach(content => content.classList.remove('active'));
-
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-
-  document.getElementById(tabId).classList.add('active');
-  btnElement.classList.add('active');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function scrollToEvent(tabId, eventId) {
-  const tabIndex = tabId === 'tab-fri' ? 2 : tabId === 'tab-sat' ? 3 : 4;
-  const tabBtn = document.querySelectorAll('.tab-btn')[tabIndex];
-  openTab(tabId, tabBtn);
-
-  setTimeout(() => {
-    const eventCard = document.getElementById(eventId);
-    if (eventCard) {
-      const yOffset = -20;
-      const y = eventCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  }, 200);
-}
-
-function toggleTravel(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('show');
-}
-
-// Budget
-function updateBudgetTotal() {
-  const inputs = document.querySelectorAll('.expense-amount-input');
-  let total = 0;
-  inputs.forEach(input => {
-    const value = parseFloat(input.value) || 0;
-    total += value;
-  });
-  const totalElement = document.getElementById('budget-total');
-  if (totalElement) {
-    totalElement.textContent = '$' + total.toLocaleString();
-  }
-  if (typeof(Storage) !== 'undefined') {
-    const budgetData = [];
-    inputs.forEach(input => {
-      budgetData.push({
-        name: input.previousElementSibling ? input.previousElementSibling.value : '',
-        amount: parseFloat(input.value) || 0
-      });
-    });
-    localStorage.setItem('budgetData', JSON.stringify(budgetData));
-  }
-}
-
-function addBudgetItem() {
-  const container = document.getElementById('custom-expenses-container');
-  const itemDiv = document.createElement('div');
-  itemDiv.className = 'expense-item editable-expense';
-  itemDiv.style.marginBottom = '8px';
-
-  const nameInput = document.createElement('input');
-  nameInput.type = 'text';
-  nameInput.className = 'expense-name-input';
-  nameInput.placeholder = 'Enter expense name';
-  nameInput.style.width = 'auto';
-  nameInput.style.flexGrow = '1';
-
-  const amountInput = document.createElement('input');
-  amountInput.type = 'number';
-  amountInput.className = 'expense-amount-input';
-  amountInput.value = '0';
-  amountInput.onchange = updateBudgetTotal;
-
-  const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = '\u00d7';
-  deleteBtn.className = 'copy-btn';
-  deleteBtn.style.marginLeft = '8px';
-  deleteBtn.style.padding = '6px 12px';
-  deleteBtn.style.fontSize = '1.2rem';
-  deleteBtn.style.lineHeight = '1';
-  deleteBtn.onclick = function() {
-    itemDiv.remove();
-    updateBudgetTotal();
-  };
-
-  itemDiv.appendChild(nameInput);
-  itemDiv.appendChild(amountInput);
-  itemDiv.appendChild(deleteBtn);
-  container.appendChild(itemDiv);
-
-  nameInput.focus();
-  updateBudgetTotal();
-}
-
-// Clipboard
-function copyToClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      showCopyFeedback(text);
-    }).catch(() => {
-      fallbackCopy(text);
-    });
-  } else {
-    fallbackCopy(text);
-  }
-}
-
-function showCopyFeedback(text) {
-  const buttons = document.querySelectorAll('.copy-btn');
-  buttons.forEach(btn => {
-    if (btn.onclick && btn.onclick.toString().includes(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))) {
-      const originalText = btn.textContent;
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = originalText;
-        btn.classList.remove('copied');
-      }, 2000);
-    }
-  });
-}
-
-function fallbackCopy(text) {
-  const textArea = document.createElement('textarea');
-  textArea.value = text;
-  textArea.style.position = 'fixed';
-  textArea.style.left = '-999999px';
-  document.body.appendChild(textArea);
-  textArea.select();
-  try {
-    document.execCommand('copy');
-    showCopyFeedback(text);
-  } catch (err) {
-    alert('Could not copy');
-  }
-  document.body.removeChild(textArea);
-}
-
-// Checklist progress
-function updateProgress() {
-  const checkboxes = document.querySelectorAll('.pack-checkbox');
-  const checked = document.querySelectorAll('.pack-checkbox:checked').length;
-  const total = checkboxes.length;
-  const percentage = total > 0 ? (checked / total) * 100 : 0;
-
-  document.getElementById('pack-progress').style.width = percentage + '%';
-  document.getElementById('pack-count').textContent = checked;
-  document.getElementById('pack-total').textContent = total;
-
-  if (typeof(Storage) !== 'undefined') {
-    const checkedIndices = [];
-    checkboxes.forEach((checkbox, index) => {
-      if (checkbox.checked) checkedIndices.push(index);
-    });
-    localStorage.setItem('packingProgress', JSON.stringify(checkedIndices));
-  }
-}
-
-// Countdown timer
-function updateCountdown() {
-  const tripDate = new Date('2026-02-20T00:00:00');
-  const now = new Date();
-  const diff = tripDate - now;
-
-  const container = document.getElementById('countdown');
-  if (!container) return;
-
-  if (diff <= 0) {
-    container.innerHTML = '<div class="countdown-unit"><span class="countdown-num" style="font-size: 1rem; letter-spacing: 1px;">THE TIME IS NOW</span></div>';
-    return;
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-  container.innerHTML = `
-    <div class="countdown-unit">
-      <span class="countdown-num">${days}</span>
-      <span class="countdown-label">Days</span>
-    </div>
-    <div class="countdown-unit">
-      <span class="countdown-num">${hours}</span>
-      <span class="countdown-label">Hrs</span>
-    </div>
-    <div class="countdown-unit">
-      <span class="countdown-num">${mins}</span>
-      <span class="countdown-label">Min</span>
-    </div>
-  `;
-}
-
-// Initialize
-window.addEventListener('DOMContentLoaded', function() {
-  // Checklist
-  const total = document.querySelectorAll('.pack-checkbox').length;
-  document.getElementById('pack-total').textContent = total;
-
-  if (typeof(Storage) !== 'undefined') {
-    // Restore checklist
-    const saved = localStorage.getItem('packingProgress');
-    if (saved) {
-      const checkedIndices = JSON.parse(saved);
-      const checkboxes = document.querySelectorAll('.pack-checkbox');
-      checkedIndices.forEach(index => {
-        if (checkboxes[index]) checkboxes[index].checked = true;
-      });
-      updateProgress();
-    }
-
-    // Restore budget
-    const savedBudget = localStorage.getItem('budgetData');
-    if (savedBudget) {
-      const budgetData = JSON.parse(savedBudget);
-      const inputs = document.querySelectorAll('.expense-amount-input');
-      inputs.forEach((input, index) => {
-        if (budgetData[index]) input.value = budgetData[index].amount;
-      });
-      updateBudgetTotal();
-    }
-  }
-
-  // Countdown
-  updateCountdown();
-  setInterval(updateCountdown, 60000);
-
-  // Editable content persistence
-  document.querySelectorAll('[contenteditable="true"]').forEach((element, index) => {
-    const storageKey = `editable-content-${index}`;
-    const saved = localStorage.getItem(storageKey);
-    if (saved) element.innerHTML = saved;
-
-    element.addEventListener('blur', function() {
-      if (typeof(Storage) !== 'undefined') {
-        localStorage.setItem(storageKey, this.innerHTML);
-      }
-    });
-  });
-});
-
-// Swipe navigation
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
-
-document.addEventListener('touchend', e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
-  const swipeThreshold = 100;
-  const swipeDistance = touchEndX - touchStartX;
-
-  if (Math.abs(swipeDistance) > swipeThreshold) {
-    const activeTab = document.querySelector('.tab-btn.active');
-    const allTabs = Array.from(document.querySelectorAll('.tab-btn'));
-    const currentIndex = allTabs.indexOf(activeTab);
-
-    if (swipeDistance > 0 && currentIndex > 0) {
-      allTabs[currentIndex - 1].click();
-    } else if (swipeDistance < 0 && currentIndex < allTabs.length - 1) {
-      allTabs[currentIndex + 1].click();
-    }
-  }
-}
-
-// Haptic feedback
-document.querySelectorAll('button, a').forEach(element => {
-  element.addEventListener('click', () => {
-    if (navigator.vibrate) navigator.vibrate(10);
-  });
-});
-</script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
