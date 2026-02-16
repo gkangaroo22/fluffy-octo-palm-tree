@@ -126,8 +126,7 @@
   </div>
 
   <div class="info-box">
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 0.9rem;">
-      <div><strong style="color: var(--soft-cyan);">Thu:</strong> 39°F ❄️⛅</div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 0.9rem;">
       <div><strong style="color: var(--ice-blue);">Fri:</strong> 43°F 🌤️☁️</div>
       <div><strong style="color: var(--muted-purple);">Sat:</strong> 41°F 🌧️☔</div>
       <div><strong style="color: var(--rose-gold);">Sun:</strong> 45°F ⛅🌤️</div>
@@ -140,16 +139,19 @@
   <!-- Flight Event Cards -->
   <div class="card travel" id="event-arrival">
     <div class="card-body">
-      <span class="time-badge">4:55 PM → 10:30 PM</span>
-      <h2>✈️ Arrival — Thursday</h2>
+      <span class="time-badge">6:15 AM → 12:00 PM</span>
+      <h2>✈️ Outbound Flight — Friday</h2>
       <div class="location">
-        AA1583 · DEN → LGA
+        Flight #0378 · DEN → LGA
       </div>
       <div class="details">
-        <strong>Thursday, February 19, 2026</strong><br>
-        Departs Denver: 4:55 PM<br>
-        Arrives LaGuardia: 10:30 PM<br><br>
-        Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;"> · Seat: <input type="text" class="inline-edit-field" value="18F" style="width: 50px;"><br><br>
+        <strong>Friday, February 20, 2026</strong><br>
+        Departs Denver (DEN): 6:15 AM<br>
+        Arrives NYC LaGuardia (LGA): 12:00 PM<br>
+        Duration: 3h 45m<br><br>
+        Seat: <strong>22A</strong> · Class: Standard<br>
+        Confirmation: <strong>5262127824790</strong>
+        <button class="copy-btn" onclick="copyToClipboard('5262127824790')">Copy</button><br><br>
         <strong>Getting to hotel:</strong> Uber from LGA → Ace Hotel Brooklyn (~35-45 min, $45-60)
       </div>
     </div>
@@ -157,17 +159,20 @@
 
   <div class="card travel" id="event-departure">
     <div class="card-body">
-      <span class="time-badge">10:00 AM → 12:35 PM</span>
-      <h2>✈️ Departure — Monday</h2>
+      <span class="time-badge">9:45 AM → 12:20 PM</span>
+      <h2>✈️ Return Flight — Monday</h2>
       <div class="location">
-        AA1418 · LGA → DEN
+        Flight #2361 · LGA → DEN
       </div>
       <div class="details">
         <strong>Monday, February 23, 2026</strong><br>
-        Departs LaGuardia: 10:00 AM<br>
-        Arrives Denver: 12:35 PM<br><br>
-        Confirmation: <input type="text" class="inline-edit-field" value="" placeholder="Enter confirmation" style="width: 120px;"><br><br>
-        <strong>Leave hotel by 7:30 AM</strong> — Uber to LGA (~35-45 min + security buffer)
+        Departs NYC LaGuardia (LGA): 9:45 AM<br>
+        Arrives Denver (DEN): 12:20 PM<br>
+        Duration: 4h 35m<br><br>
+        Seat: <strong>18A</strong> · Class: Standard<br>
+        Confirmation: <strong>5262127824790</strong>
+        <button class="copy-btn" onclick="copyToClipboard('5262127824790')">Copy</button><br><br>
+        <strong>Leave hotel by 7:00 AM</strong> — Uber to LGA (~35-45 min + security buffer)
       </div>
     </div>
   </div>
@@ -192,12 +197,12 @@
   </div>
 
   <div class="reminder-box" style="margin-bottom: 20px;">
-    <strong>Start your day:</strong> Take morning medicine with breakfast.
+    <strong>Early start:</strong> Take morning medicine before your 6:15 AM flight. You land at noon!
   </div>
 
   <div class="card travel" id="event-checkin">
     <div class="card-body">
-      <span class="time-badge">Morning / Early Afternoon</span>
+      <span class="time-badge">~12:45 PM — After Landing</span>
       <h2>🏨 Check In — Ace Hotel Brooklyn</h2>
       <div class="location">
         252 Schermerhorn St, Boerum Hill
@@ -205,7 +210,7 @@
       </div>
       <div class="details">
         <strong>Arrive & Settle In</strong><br>
-        Uber from LaGuardia → Ace Hotel Brooklyn (~35-45 min)<br><br>
+        Flight lands at 12:00 PM — Uber from LaGuardia → Ace Hotel Brooklyn (~35-45 min)<br><br>
         · Drop off bags and freshen up<br>
         · Explore the hotel lobby and lounge<br>
         · Grab coffee at the Ace's lobby bar<br><br>
