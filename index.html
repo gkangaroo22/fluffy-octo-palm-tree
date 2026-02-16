@@ -3,10 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
 <title>NYC 2026</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toast-container"></div>
 
 <!-- Ambient warehouse light orbs -->
 <div class="ambient-wrap">
@@ -273,17 +283,17 @@
       <span class="time-badge">8:45 PM – 11:00 PM</span>
       <h2 contenteditable="true">Bar Crawl</h2>
       <div class="location">
-        Hell's Kitchen → East Village
-        <button class="copy-btn" onclick="copyToClipboard('Industry Bar, 355 W 52nd St, New York, NY')">Copy</button>
+        Hell's Kitchen, Midtown West
+        <button class="copy-btn" onclick="copyToClipboard('355 W 52nd St, New York, NY')">Copy</button>
       </div>
       <div class="details" contenteditable="true">
-        <strong>West Side Bar Crawl</strong><br>
-        Start at <strong>Industry Bar</strong> (355 W 52nd St) or <strong>Therapy</strong> (348 W 52nd St) in Hell's Kitchen, then make your way east. End at <strong>The Ritz</strong> (369 W 46th St) before heading to Nocturnal.<br><br>
+        <strong>Hell's Kitchen Bar Crawl</strong><br>
+        Start at <strong>Industry Bar</strong> (355 W 52nd St) or <strong>Therapy</strong> (348 W 52nd St) in Hell's Kitchen, then make your way through the neighborhood. End at <strong>The Ritz</strong> (369 W 46th St) before heading to Nocturnal.<br><br>
         <strong>Suggested Route:</strong><br>
-        · Industry Bar / Therapy (Start — 8:45 PM)<br>
-        · Boxers HK (37th & 8th)<br>
-        · Flaming Saddles (9th Ave)<br>
-        · The Ritz (Final stop — 10:30 PM)<br><br>
+        · Industry Bar / Therapy — 355/348 W 52nd St (Start — 8:45 PM)<br>
+        · Boxers HK — 742 9th Ave<br>
+        · Flaming Saddles — 793 9th Ave<br>
+        · The Ritz — 369 W 46th St (Final stop — 10:30 PM)<br><br>
         <em>Pace yourself — it's a long night ahead! Hydrate between stops.</em>
       </div>
       <div class="reminder-box">
@@ -355,11 +365,36 @@
 <div id="tab-sat" class="tab-content">
   <div class="day-header">
     <div class="day-title">Saturday</div>
-    <div class="day-subtitle">Vogue → MoMA → Lunch → Vogue → World Dweller → Afterparty</div>
+    <div class="day-subtitle">Vogue → MoMA → Vogue → Hotel → World Dweller → Afterparty</div>
   </div>
 
   <div class="reminder-box" style="margin-bottom: 20px;">
     <strong>Start your day:</strong> Take morning medicine with breakfast. Leave hotel by <strong>11:10 AM</strong> for first vogue class at Broadway Dance Center.
+  </div>
+
+  <div class="info-box" id="sat-day-bag" style="background: rgba(212, 175, 122, 0.06); border: 1px solid rgba(212, 175, 122, 0.2);">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+      <span style="font-size: 1.5rem;">👜</span>
+      <strong style="font-size: 1rem; color: var(--warm-gold);">Saturday Day Bag</strong>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 12px;">
+      You're out all day — pack everything you need before leaving the hotel.
+    </div>
+    <ul class="checklist" id="sat-bag-checklist">
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Dance bag (clothes, towel)</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> World Dweller outfit (change at hotel later)</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Heels</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Knee pads</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Water bottle</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Deodorant</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Makeup kit (for after classes)</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Everyday bag</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Jacket (41°F + rain)</li>
+      <li><input type="checkbox" class="sat-bag-checkbox" onchange="updateSatBagProgress()"> Umbrella</li>
+    </ul>
+    <div style="margin-top: 10px; font-size: 0.8rem; color: var(--warm-gold);">
+      <span id="sat-bag-count">0</span>/10 packed
+    </div>
   </div>
 
   <div class="card dance" id="event-vogue1">
@@ -472,6 +507,39 @@
     </div>
   </div>
 
+  <div class="card" id="event-sat-hotel">
+    <div class="card-body">
+      <span class="time-badge">5:30 PM – 6:30 PM</span>
+      <h2>Hotel Pit Stop + Dinner</h2>
+      <div class="location">Ace Hotel Brooklyn</div>
+      <div class="details">
+        <strong>Recharge & Transform</strong><br>
+        After two vogue classes you've earned this! Head back to decompress before the evening.<br><br>
+        · Do your makeup for the evening<br>
+        · Change into World Dweller outfit<br>
+        · Eat something nourishing (see below)<br>
+        · Recharge mentally — resist the urge to cancel and stay in bed!<br><br>
+        <strong>Dairy-Free Dinner Ideas</strong> (fiber-rich, easy on the stomach):<br>
+        · <strong>Sweetgreen</strong> — Harvest Bowl or Kale Caesar (no cheese), 10 min walk<br>
+        · <strong>CAVA</strong> — Grain bowl with greens, lentils, hummus, 12 min walk<br>
+        · <strong>Seamless/DoorDash</strong> — Thai curry with vegetables and rice, or a big açaí bowl<br>
+        · <strong>Dig</strong> — Roasted salmon with sweet potatoes and charred broccoli, 8 min walk<br><br>
+        <em>Your body needs fuel for tonight. Something warm with fiber will keep you going through BASEMENT at 4 AM.</em>
+      </div>
+      <div class="reminder-box">
+        <strong>The temptation is real:</strong> After two dance classes and MoMA, the bed will be calling. But World Dweller is a once-in-a-lifetime experience and BASEMENT will be legendary. You'll thank yourself later. Get up, get gorgeous, eat well, and go!
+      </div>
+      <button class="travel-toggle" onclick="toggleTravel('sat-hotel')">
+        Travel Info →
+      </button>
+      <div id="sat-hotel" class="travel-info">
+        <strong>Ailey Extension → Ace Hotel:</strong><br>
+        Uber/Lyft: ~20-25 min, $20-30 (RECOMMENDED after a long day on your feet)<br><br>
+        <strong>Leave Ailey by 5:10 PM</strong> to arrive at hotel with time to eat and get ready.
+      </div>
+    </div>
+  </div>
+
   <div class="card culture" id="event-dweller">
     <div class="card-body">
       <span class="time-badge">7:00 PM</span>
@@ -495,10 +563,10 @@
         Travel Info →
       </button>
       <div id="sat-2" class="travel-info">
-        <strong>Ailey → Red Hook:</strong><br>
-        Subway option: ~75-90 min with transfers (NOT recommended)<br>
-        <strong>Uber/Lyft: ~40-50 min, $35-45 (RECOMMENDED)</strong><br><br>
-        <strong>Leave Ailey by 6:00 PM</strong> to arrive comfortably at 7:00 PM entry time.
+        <strong>Ace Hotel → Pioneer Works (Red Hook):</strong><br>
+        Take B61 bus from Downtown Brooklyn to Red Hook (~30-35 min, $2.90). A nice way to see Brooklyn!<br>
+        Or Uber/Lyft: ~20-25 min, $20-30.<br><br>
+        <strong>Leave hotel by 6:15 PM</strong> to arrive comfortably for 7:00 PM entry.
       </div>
       <a href="https://maps.google.com/?q=159+Pioneer+St+Brooklyn+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -684,11 +752,35 @@
     </div>
   </div>
 
-  <div class="card party" id="event-cock">
+  <div class="card">
     <div class="card-body">
       <div class="med-reminder" style="margin-bottom: 12px;">
-        Take party medicine before going out
+        Take party medicine before heading out
       </div>
+      <span class="time-badge">9:00 PM – 11:00 PM</span>
+      <h2>Hotel Pit Stop</h2>
+      <div class="location">Ace Hotel Brooklyn</div>
+      <div class="details">
+        Head back to recharge before the grand finale:<br>
+        · Take party medicine<br>
+        · Change into your finale outfit<br>
+        · Refresh and touch up<br>
+        · Charge your phone<br>
+        · Leave by 11:00 PM for The Cock
+      </div>
+      <button class="travel-toggle" onclick="toggleTravel('sun-pitstop')">
+        Travel Info →
+      </button>
+      <div id="sun-pitstop" class="travel-info">
+        <strong>Upper West Side → Ace Hotel:</strong><br>
+        Take 1 train from 66th St to Hoyt-Schermerhorn via A/C transfer at Chambers (~30-35 min). Or Uber (~25 min, $25-35).<br><br>
+        <strong>Leave dinner by 8:30 PM</strong> to have time to get ready.
+      </div>
+    </div>
+  </div>
+
+  <div class="card party" id="event-cock">
+    <div class="card-body">
       <span class="time-badge">11:30 PM – 4:00 AM</span>
       <h2>The Cock — "Sloppy Sunday"</h2>
       <div class="location">

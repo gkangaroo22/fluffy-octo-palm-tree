@@ -1,4 +1,19 @@
-// Tab navigation
+// === TOAST NOTIFICATION SYSTEM ===
+function showToast(message, icon) {
+  icon = icon || '';
+  var container = document.getElementById('toast-container');
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = (icon ? '<span>' + icon + '</span>' : '') + message;
+  container.appendChild(toast);
+
+  setTimeout(function() {
+    toast.classList.add('toast-out');
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 2200);
+}
+
+// === TAB NAVIGATION ===
 function openTab(tabId, btnElement) {
   var contents = document.querySelectorAll('.tab-content');
   contents.forEach(function(content) { content.classList.remove('active'); });
@@ -10,20 +25,31 @@ function openTab(tabId, btnElement) {
   tab.classList.add('active');
   btnElement.classList.add('active');
 
-  // Force re-trigger card fade-in animations to fix cards not loading
-  var cards = tab.querySelectorAll('.card');
+  // Reset scroll-reveal cards so they animate in
+  var cards = tab.querySelectorAll('.card.reveal');
   cards.forEach(function(card) {
-    card.style.animation = 'none';
-    void card.offsetHeight; // force reflow
-    card.style.animation = '';
+    card.classList.remove('visible');
   });
 
+  // Trigger observer check after tab switch
+  setTimeout(function() {
+    if (window._cardObserver) {
+      cards.forEach(function(card) {
+        window._cardObserver.observe(card);
+      });
+    }
+  }, 50);
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Save active tab
+  if (typeof Storage !== 'undefined') {
+    localStorage.setItem('activeTab', tabId);
+  }
 }
 
 // Scroll to a specific event card within a tab
 function scrollToEvent(tabId, eventId) {
-  // Tab order: Home(0), Friday(1), Saturday(2), Sunday(3), Budget(4), Pack(5)
   var tabIndex = tabId === 'tab-fri' ? 1 : tabId === 'tab-sat' ? 2 : tabId === 'tab-sun' ? 3 : 4;
   var tabBtn = document.querySelectorAll('.tab-btn')[tabIndex];
   openTab(tabId, tabBtn);
@@ -38,13 +64,13 @@ function scrollToEvent(tabId, eventId) {
   }, 200);
 }
 
-// Toggle travel info panels
+// === TRAVEL INFO TOGGLE ===
 function toggleTravel(id) {
   var el = document.getElementById(id);
   el.classList.toggle('show');
 }
 
-// Budget total calculator
+// === BUDGET CALCULATOR ===
 function updateBudgetTotal() {
   var inputs = document.querySelectorAll('.expense-amount-input');
   var total = 0;
@@ -68,7 +94,6 @@ function updateBudgetTotal() {
   }
 }
 
-// Add custom budget line item
 function addBudgetItem() {
   var container = document.getElementById('custom-expenses-container');
   var itemDiv = document.createElement('div');
@@ -109,32 +134,17 @@ function addBudgetItem() {
   updateBudgetTotal();
 }
 
-// Clipboard
+// === CLIPBOARD WITH TOAST ===
 function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(function() {
-      showCopyFeedback(text);
+      showToast('Copied to clipboard', '📋');
     }).catch(function() {
       fallbackCopy(text);
     });
   } else {
     fallbackCopy(text);
   }
-}
-
-function showCopyFeedback(text) {
-  var buttons = document.querySelectorAll('.copy-btn');
-  buttons.forEach(function(btn) {
-    if (btn.onclick && btn.onclick.toString().includes(text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))) {
-      var originalText = btn.textContent;
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(function() {
-        btn.textContent = originalText;
-        btn.classList.remove('copied');
-      }, 2000);
-    }
-  });
 }
 
 function fallbackCopy(text) {
@@ -146,14 +156,14 @@ function fallbackCopy(text) {
   textArea.select();
   try {
     document.execCommand('copy');
-    showCopyFeedback(text);
+    showToast('Copied to clipboard', '📋');
   } catch (err) {
-    alert('Could not copy');
+    showToast('Could not copy', '⚠️');
   }
   document.body.removeChild(textArea);
 }
 
-// Checklist progress
+// === CHECKLIST PROGRESS ===
 function updateProgress() {
   var checkboxes = document.querySelectorAll('.pack-checkbox');
   var checked = document.querySelectorAll('.pack-checkbox:checked').length;
@@ -171,9 +181,34 @@ function updateProgress() {
     });
     localStorage.setItem('packingProgress', JSON.stringify(checkedIndices));
   }
+
+  // Celebrate completion
+  if (checked === total && total > 0) {
+    showToast('All packed! You\'re ready for NYC!', '🎉');
+  }
 }
 
-// Countdown timer
+// === SATURDAY BAG CHECKLIST ===
+function updateSatBagProgress() {
+  var checkboxes = document.querySelectorAll('.sat-bag-checkbox');
+  var checked = document.querySelectorAll('.sat-bag-checkbox:checked').length;
+  var countEl = document.getElementById('sat-bag-count');
+  if (countEl) countEl.textContent = checked;
+
+  if (typeof Storage !== 'undefined') {
+    var checkedIndices = [];
+    checkboxes.forEach(function(cb, i) {
+      if (cb.checked) checkedIndices.push(i);
+    });
+    localStorage.setItem('satBagProgress', JSON.stringify(checkedIndices));
+  }
+
+  if (checked === checkboxes.length && checkboxes.length > 0) {
+    showToast('Day bag is ready! Go kill it!', '💃');
+  }
+}
+
+// === COUNTDOWN TIMER ===
 function updateCountdown() {
   var tripDate = new Date('2026-02-20T00:00:00');
   var now = new Date();
@@ -206,14 +241,158 @@ function updateCountdown() {
     '</div>';
 }
 
-// Initialize
+// === SCROLL PROGRESS BAR ===
+function updateScrollProgress() {
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  var bar = document.getElementById('scroll-progress');
+  if (bar) bar.style.width = scrollPercent + '%';
+}
+
+// === PARALLAX HEADER ===
+function updateHeaderParallax() {
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  var header = document.querySelector('header');
+  if (!header) return;
+
+  if (scrollTop > 120) {
+    header.classList.add('compact');
+  } else {
+    header.classList.remove('compact');
+  }
+}
+
+// === SCROLL-REVEAL (INTERSECTION OBSERVER) ===
+function initScrollReveal() {
+  var cards = document.querySelectorAll('.card');
+  cards.forEach(function(card) {
+    card.classList.add('reveal');
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  // Only observe cards in the active tab initially
+  var activeTab = document.querySelector('.tab-content.active');
+  if (activeTab) {
+    activeTab.querySelectorAll('.card.reveal').forEach(function(card) {
+      observer.observe(card);
+    });
+  }
+
+  window._cardObserver = observer;
+}
+
+// === NOW INDICATOR ===
+function updateNowIndicator() {
+  // Event schedule: [tabId, eventId, startHour, startMin, endHour, endMin, day (20-23)]
+  var events = [
+    // Friday Feb 20
+    ['tab-fri', 'event-checkin', 12, 0, 14, 0, 20],
+    ['tab-fri', 'event-holywater', 19, 15, 20, 45, 20],
+    ['tab-fri', 'event-bars', 20, 45, 23, 0, 20],
+    ['tab-fri', 'event-nocturnal', 23, 0, 23, 59, 20],
+    // Sat Feb 21
+    ['tab-sat', 'event-vogue1', 12, 0, 13, 30, 21],
+    ['tab-sat', 'event-moma', 13, 30, 15, 0, 21],
+    ['tab-sat', 'event-vogue2', 15, 30, 17, 0, 21],
+    ['tab-sat', 'event-sat-hotel', 17, 30, 18, 30, 21],
+    ['tab-sat', 'event-dweller', 19, 0, 21, 30, 21],
+    ['tab-sat', 'event-basement', 23, 15, 23, 59, 21],
+    // Sun Feb 22
+    ['tab-sun', 'event-brunch', 11, 0, 13, 0, 22],
+    ['tab-sun', 'event-ballet', 15, 0, 17, 30, 22],
+    ['tab-sun', 'event-birthday-dinner', 18, 30, 20, 30, 22],
+    ['tab-sun', 'event-cock', 23, 30, 23, 59, 22]
+  ];
+
+  var now = new Date();
+  var month = now.getMonth(); // 0-indexed, Feb = 1
+  var day = now.getDate();
+  var hour = now.getHours();
+  var min = now.getMinutes();
+
+  // Clear existing badges and active states
+  document.querySelectorAll('.now-badge').forEach(function(b) { b.remove(); });
+  document.querySelectorAll('.card.now-active').forEach(function(c) { c.classList.remove('now-active'); });
+
+  // Only show during trip (Feb 20-23, 2026)
+  if (now.getFullYear() !== 2026 || month !== 1) return;
+
+  events.forEach(function(ev) {
+    if (day !== ev[6]) return;
+    var startMins = ev[2] * 60 + ev[3];
+    var endMins = ev[4] * 60 + ev[5];
+    var nowMins = hour * 60 + min;
+
+    if (nowMins >= startMins && nowMins <= endMins) {
+      var card = document.getElementById(ev[1]);
+      if (card) {
+        card.classList.add('now-active');
+        var h2 = card.querySelector('h2');
+        if (h2 && !h2.querySelector('.now-badge')) {
+          var badge = document.createElement('span');
+          badge.className = 'now-badge';
+          badge.textContent = 'NOW';
+          h2.appendChild(badge);
+        }
+      }
+    }
+  });
+}
+
+// === DOUBLE-TAP BOOKMARK ===
+function initBookmarks() {
+  var cards = document.querySelectorAll('.card[id]');
+  var saved = {};
+  try {
+    saved = JSON.parse(localStorage.getItem('bookmarkedEvents') || '{}');
+  } catch (e) { saved = {}; }
+
+  cards.forEach(function(card) {
+    var id = card.id;
+    var bookmark = document.createElement('div');
+    bookmark.className = 'card-bookmark' + (saved[id] ? ' saved' : '');
+    bookmark.innerHTML = saved[id] ? '💛' : '🤍';
+    bookmark.setAttribute('aria-label', 'Bookmark this event');
+
+    bookmark.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isSaved = bookmark.classList.toggle('saved');
+      bookmark.innerHTML = isSaved ? '💛' : '🤍';
+
+      if (isSaved) {
+        saved[id] = true;
+        showToast('Event saved!', '💛');
+      } else {
+        delete saved[id];
+      }
+      localStorage.setItem('bookmarkedEvents', JSON.stringify(saved));
+    });
+
+    card.style.position = 'relative';
+    card.appendChild(bookmark);
+  });
+}
+
+// === INITIALIZE EVERYTHING ===
 window.addEventListener('DOMContentLoaded', function() {
   // Checklist
   var total = document.querySelectorAll('.pack-checkbox').length;
   document.getElementById('pack-total').textContent = total;
 
   if (typeof Storage !== 'undefined') {
-    // Restore checklist
+    // Restore packing checklist
     var saved = localStorage.getItem('packingProgress');
     if (saved) {
       var checkedIndices = JSON.parse(saved);
@@ -222,6 +401,17 @@ window.addEventListener('DOMContentLoaded', function() {
         if (checkboxes[index]) checkboxes[index].checked = true;
       });
       updateProgress();
+    }
+
+    // Restore sat bag checklist
+    var satSaved = localStorage.getItem('satBagProgress');
+    if (satSaved) {
+      var satIndices = JSON.parse(satSaved);
+      var satCheckboxes = document.querySelectorAll('.sat-bag-checkbox');
+      satIndices.forEach(function(index) {
+        if (satCheckboxes[index]) satCheckboxes[index].checked = true;
+      });
+      updateSatBagProgress();
     }
 
     // Restore budget
@@ -233,6 +423,18 @@ window.addEventListener('DOMContentLoaded', function() {
         if (budgetData[index]) input.value = budgetData[index].amount;
       });
       updateBudgetTotal();
+    }
+
+    // Restore active tab
+    var activeTabId = localStorage.getItem('activeTab');
+    if (activeTabId) {
+      var tabBtn = null;
+      var tabIds = ['tab-home', 'tab-fri', 'tab-sat', 'tab-sun', 'tab-budget', 'tab-checklist'];
+      var tabIndex = tabIds.indexOf(activeTabId);
+      if (tabIndex >= 0) {
+        tabBtn = document.querySelectorAll('.tab-btn')[tabIndex];
+        if (tabBtn) openTab(activeTabId, tabBtn);
+      }
     }
   }
 
@@ -252,9 +454,32 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Scroll-reveal with Intersection Observer
+  initScrollReveal();
+
+  // Bookmarks
+  initBookmarks();
+
+  // Now indicator (check every 30s)
+  updateNowIndicator();
+  setInterval(updateNowIndicator, 30000);
+
+  // Scroll listeners (throttled)
+  var scrollTicking = false;
+  window.addEventListener('scroll', function() {
+    if (!scrollTicking) {
+      requestAnimationFrame(function() {
+        updateScrollProgress();
+        updateHeaderParallax();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
 });
 
-// Swipe navigation
+// === SWIPE NAVIGATION ===
 var touchStartX = 0;
 var touchEndX = 0;
 
@@ -284,9 +509,16 @@ function handleSwipe() {
   }
 }
 
-// Haptic feedback
+// === HAPTIC FEEDBACK ===
 document.querySelectorAll('button, a').forEach(function(element) {
   element.addEventListener('click', function() {
     if (navigator.vibrate) navigator.vibrate(10);
   });
 });
+
+// === SERVICE WORKER REGISTRATION ===
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function() {
+    // SW registration failed — offline support unavailable, no action needed
+  });
+}

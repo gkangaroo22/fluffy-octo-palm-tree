@@ -1330,6 +1330,235 @@ h2[contenteditable="true"]:focus {
   gap: 8px;
 }
 
+/* === SCROLL PROGRESS BAR === */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--muted-purple), var(--steel-blue), var(--warm-gold), var(--rose-gold));
+  z-index: 300;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(143, 180, 214, 0.4);
+}
+
+/* === TOAST NOTIFICATIONS === */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  width: 90%;
+  max-width: 360px;
+}
+
+.toast {
+  background: rgba(26, 26, 26, 0.95);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(143, 180, 214, 0.3);
+  color: var(--white);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(143, 180, 214, 0.1);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.toast-out {
+  animation: toastOut 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+@keyframes toastIn {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(-10px) scale(0.95); }
+}
+
+/* === SCROLL-REVEAL CARDS === */
+.card.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: none;
+}
+
+.card.reveal.visible {
+  animation: revealUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stagger reveal delays for sibling cards */
+.card.reveal.visible:nth-child(2) { animation-delay: 0.06s; }
+.card.reveal.visible:nth-child(3) { animation-delay: 0.12s; }
+.card.reveal.visible:nth-child(4) { animation-delay: 0.18s; }
+
+/* === NOW INDICATOR === */
+.now-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(127, 199, 217, 0.2) 0%, rgba(184, 159, 217, 0.2) 100%);
+  border: 1px solid var(--soft-cyan);
+  color: var(--soft-cyan);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-left: 8px;
+}
+
+.now-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--soft-cyan);
+  animation: nowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes nowPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(127, 199, 217, 0.6); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(127, 199, 217, 0); }
+}
+
+.card.now-active {
+  border-color: rgba(127, 199, 217, 0.3);
+  box-shadow: 0 0 20px rgba(127, 199, 217, 0.08), 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* === PARALLAX HEADER === */
+header {
+  transition: padding 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+}
+
+header.compact {
+  padding: 16px 20px 12px;
+}
+
+header.compact .disco-container { display: none; }
+header.compact h1 { font-size: 1.6rem; margin-bottom: 4px; }
+header.compact .subtitle { font-size: 0.7rem; letter-spacing: 4px; }
+header.compact .countdown { margin-top: 8px; }
+header.compact .countdown-num { font-size: 1rem; }
+
+/* === CUSTOM SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pure-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--steel-blue), var(--muted-purple));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--ice-blue), var(--muted-purple));
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--steel-blue) var(--pure-black);
+}
+
+/* === DOUBLE-TAP BOOKMARK === */
+.card-bookmark {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(42, 42, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+  opacity: 0;
+}
+
+.card:hover .card-bookmark,
+.card-bookmark.saved {
+  opacity: 1;
+}
+
+.card-bookmark.saved {
+  background: rgba(212, 175, 122, 0.2);
+  border-color: var(--warm-gold);
+  box-shadow: 0 0 12px rgba(212, 175, 122, 0.2);
+}
+
+.card-bookmark:active {
+  transform: scale(0.85);
+}
+
+/* === HEART BURST ANIMATION === */
+.heart-burst {
+  position: fixed;
+  pointer-events: none;
+  z-index: 400;
+  font-size: 1.5rem;
+  animation: heartFloat 0.8s ease-out forwards;
+}
+
+@keyframes heartFloat {
+  0% { opacity: 1; transform: scale(0) translateY(0); }
+  30% { opacity: 1; transform: scale(1.3) translateY(-10px); }
+  100% { opacity: 0; transform: scale(0.8) translateY(-60px); }
+}
+
+/* === SATURDAY BAG CHECKLIST STYLES === */
+.sat-bag-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--warm-gold);
+  flex-shrink: 0;
+}
+
+#sat-bag-checklist li {
+  padding: 10px 12px;
+  font-size: 0.85rem;
+}
+
+#sat-bag-checklist li:has(input:checked) {
+  background: rgba(212, 175, 122, 0.06);
+  border-color: rgba(212, 175, 122, 0.15);
+  opacity: 0.5;
+  text-decoration: line-through;
+  text-decoration-color: var(--gray);
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
   h1 { font-size: 2.2rem; }
