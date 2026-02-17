@@ -121,6 +121,59 @@
     </button>
   </div>
 
+  <div class="mta-widget">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+      <span style="font-size: 1.5rem;">🚇</span>
+      <strong style="font-size: 1rem;">NYC Transit</strong>
+      <span class="mta-live-dot"></span>
+    </div>
+
+    <div class="mta-lines-row">
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #0039A6;">A</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #0039A6;">C</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #EE352E;">1</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #EE352E;">2</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #EE352E;">3</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #A7A9AC; color: #000;">L</a>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #00933C;">6</a>
+    </div>
+
+    <div class="mta-routes">
+      <div class="mta-route-row">
+        <span class="mta-route-label">Hotel → Midtown</span>
+        <span class="mta-route-badge"><span class="mta-line-sm" style="background: #0039A6;">A</span><span class="mta-line-sm" style="background: #0039A6;">C</span> ~30 min</span>
+      </div>
+      <div class="mta-route-row">
+        <span class="mta-route-label">Hotel → Harlem</span>
+        <span class="mta-route-badge"><span class="mta-line-sm" style="background: #0039A6;">A</span><span class="mta-line-sm" style="background: #0039A6;">C</span> ~30 min</span>
+      </div>
+      <div class="mta-route-row">
+        <span class="mta-route-label">Harlem → Lincoln Ctr</span>
+        <span class="mta-route-badge"><span class="mta-line-sm" style="background: #EE352E;">2</span><span class="mta-line-sm" style="background: #EE352E;">3</span> ~20 min</span>
+      </div>
+      <div class="mta-route-row">
+        <span class="mta-route-label">Hotel → East Village</span>
+        <span class="mta-route-badge"><span class="mta-line-sm" style="background: #0039A6;">A</span>→<span class="mta-line-sm" style="background: #00933C;">6</span> ~25 min</span>
+      </div>
+    </div>
+
+    <div class="mta-actions">
+      <button class="mta-action-btn" onclick="openMTAApp()">
+        Open MTA App
+      </button>
+      <a href="https://new.mta.info/alerts" target="_blank" class="mta-action-btn mta-status-btn">
+        Service Status
+      </a>
+      <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-action-btn mta-planner-btn">
+        Trip Planner
+      </a>
+    </div>
+
+    <div style="font-size: 0.75rem; color: var(--gray); margin-top: 10px; line-height: 1.5;">
+      Tap a line to check alerts. Times are estimates — check the MTA app for real-time arrivals.
+    </div>
+  </div>
+
   <div class="intentions-box">
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
       <span style="font-size: 1.8rem;">💜</span>
@@ -265,6 +318,7 @@
         <strong>Ace Hotel → Holywater:</strong><br>
         Take A/C train from Hoyt-Schermerhorn to Chambers St (~15 min), then walk south to Reade St. Or Uber (~20 min, $20-30).<br><br>
         <strong>Leave hotel by 6:45 PM</strong> to arrive on time for reservation.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=112+Reade+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -298,6 +352,7 @@
         <strong>Holywater → Industry Bar:</strong><br>
         Take 1 train from Franklin St to 50th St (~12 min). Walk west to 9th Ave area.<br><br>
         <strong>Leave Holywater by 8:45 PM</strong> to start crawl on time.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=Industry+Bar+355+W+52nd+St+New+York" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -332,6 +387,7 @@
         <strong>The Ritz → Nocturnal:</strong><br>
         Uber from Hell's Kitchen (~20 min, $25-35). L train also works: 8th Ave to Jefferson St (~15 min), then 5 min walk north.<br><br>
         <strong>Leave The Ritz around 12:30 AM</strong> to arrive by 1:00 AM. Uber is easier this late.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=1084+Flushing+Ave+Brooklyn+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -413,6 +469,7 @@
         <strong>Ace Hotel → Broadway Dance Center:</strong><br>
         Take A/C from Hoyt-Schermerhorn to 42nd St-Port Authority, walk west on 45th St to 9th Ave (~30-35 min total).<br><br>
         <strong>Leave hotel by 11:10 AM</strong> to arrive with buffer for check-in and changing.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=322+W+45th+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -442,6 +499,7 @@
         <strong>Broadway Dance → MoMA:</strong><br>
         Walk east on 45th St to 6th Ave, then walk south to 53rd St and head east (~12 min walk total).<br><br>
         <strong>Leave dance studio by 1:35 PM</strong> to arrive by your 1:30 PM entry time (arrive early if possible).
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=11+W+53rd+St+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -661,6 +719,7 @@
         <strong>Ace Hotel → Sylvia's:</strong><br>
         Take A/C from Hoyt-Schermerhorn to 125th St (~30 min), then walk east to Lenox Ave/Malcolm X Blvd (~5 min). Or Uber (~25 min, $25-35).<br><br>
         <strong>Leave hotel by 11:45 AM</strong> to arrive comfortably by 12:45 PM.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=328+Malcolm+X+Blvd+New+York+NY+10027" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -691,6 +750,7 @@
         <strong>Harlem → Lincoln Center:</strong><br>
         Take 2/3 train from 125th St to 72nd St, walk south to Lincoln Center (~20-25 min total). Or Uber (~15 min, $15-25).<br><br>
         <strong>Leave Sylvia's by 2:15 PM</strong> to arrive with comfortable buffer.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=David+H+Koch+Theater+Lincoln+Center+New+York" target="_blank" class="action-btn">Open in Maps</a>
     </div>
@@ -752,6 +812,7 @@
         <strong>Dinner → Ace Hotel:</strong><br>
         From Lincoln Center area: 1 train to Chambers, transfer to A/C to Hoyt-Schermerhorn (~30-35 min). From Midtown: take subway or Uber (~25 min, $25-35).<br><br>
         <strong>Leave dinner by 8:30 PM</strong> to have time to get ready.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
     </div>
   </div>
@@ -782,6 +843,7 @@
         <strong>Hotel → The Cock:</strong><br>
         Take A/C from Hoyt-Schermerhorn to West 4th St, transfer to 6 to Astor Place (~25 min), then walk east to 2nd Ave. Or Uber (~20 min, $20-30).<br><br>
         <strong>Leave hotel by 11:00 PM</strong> to arrive by 11:30 PM.
+        <a href="https://new.mta.info/trip-planner" target="_blank" class="mta-trip-link">MTA Trip Planner</a>
       </div>
       <a href="https://maps.google.com/?q=93+2nd+Ave+New+York+NY" target="_blank" class="action-btn">Open in Maps</a>
     </div>

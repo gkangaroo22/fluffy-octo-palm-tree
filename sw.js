@@ -1,4 +1,4 @@
-var CACHE_NAME = 'nyc-birthday-v2';
+var CACHE_NAME = 'nyc-birthday-v3';
 var URLS_TO_CACHE = [
   './',
   './index.html',

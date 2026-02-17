@@ -1621,6 +1621,160 @@ header.compact .countdown-num { font-size: 1rem; }
   to { transform: translate(-50%, -50%) scale(1); }
 }
 
+/* === MTA TRANSIT WIDGET === */
+.mta-widget {
+  background: var(--dark-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.mta-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00933C;
+  display: inline-block;
+  animation: mtaPulse 2s ease-in-out infinite;
+  margin-left: auto;
+}
+
+@keyframes mtaPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 147, 60, 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 5px rgba(0, 147, 60, 0); }
+}
+
+.mta-lines-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.mta-line {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.mta-line:hover {
+  transform: scale(1.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+.mta-routes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mta-route-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(42, 42, 42, 0.4);
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.mta-route-label {
+  color: var(--light-gray);
+  font-weight: 500;
+}
+
+.mta-route-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ice-blue);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.mta-line-sm {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.mta-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mta-actions > :first-child {
+  grid-column: 1 / -1;
+}
+
+.mta-action-btn {
+  display: block;
+  padding: 12px;
+  background: rgba(143, 180, 214, 0.1);
+  border: 1px solid rgba(143, 180, 214, 0.25);
+  color: var(--ice-blue);
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.mta-action-btn:hover {
+  background: rgba(143, 180, 214, 0.2);
+  border-color: var(--ice-blue);
+  transform: translateY(-1px);
+}
+
+/* === MTA TRIP PLANNER LINKS === */
+.mta-trip-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: rgba(0, 57, 166, 0.15);
+  border: 1px solid rgba(0, 57, 166, 0.3);
+  border-radius: 6px;
+  color: var(--ice-blue);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+}
+
+.mta-trip-link:hover {
+  background: rgba(0, 57, 166, 0.3);
+  border-color: var(--ice-blue);
+  transform: translateY(-1px);
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
   h1 { font-size: 2.2rem; }

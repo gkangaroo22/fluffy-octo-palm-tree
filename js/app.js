@@ -438,6 +438,37 @@ function checkBirthday() {
   }, 5500);
 }
 
+// === MTA APP LAUNCHER ===
+function openMTAApp() {
+  // Try deep-linking to MYmta app, fall back to MTA website
+  var mtaWeb = 'https://new.mta.info/';
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  var isAndroid = /Android/.test(navigator.userAgent);
+
+  if (isIOS) {
+    // Try MYmta app scheme, fall back to App Store then web
+    var appStoreUrl = 'https://apps.apple.com/us/app/mymta/id472041997';
+    var fallbackTimer = setTimeout(function() {
+      window.location.href = appStoreUrl;
+    }, 1500);
+
+    window.location.href = 'mymta://';
+
+    window.addEventListener('blur', function handler() {
+      clearTimeout(fallbackTimer);
+      window.removeEventListener('blur', handler);
+    });
+  } else if (isAndroid) {
+    // Android intent for MYmta app
+    window.location.href = 'intent://new.mta.info/#Intent;scheme=https;package=info.mta.mymta;end';
+    setTimeout(function() {
+      window.open(mtaWeb, '_blank');
+    }, 1500);
+  } else {
+    window.open(mtaWeb, '_blank');
+  }
+}
+
 // === INITIALIZE EVERYTHING ===
 window.addEventListener('DOMContentLoaded', function() {
   // Checklist
