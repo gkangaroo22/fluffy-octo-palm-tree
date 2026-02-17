@@ -438,6 +438,56 @@ function checkBirthday() {
   }, 5500);
 }
 
+// === MTA REFRESH ===
+function refreshMTA() {
+  var btn = document.querySelector('.mta-refresh-btn');
+  if (btn) {
+    btn.classList.remove('spinning');
+    // Force reflow to restart animation
+    void btn.offsetWidth;
+    btn.classList.add('spinning');
+    setTimeout(function() { btn.classList.remove('spinning'); }, 500);
+  }
+
+  // Save last-checked timestamp
+  var now = new Date();
+  var timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  var el = document.getElementById('mta-last-checked');
+  if (el) el.textContent = 'Last checked: ' + timeStr;
+
+  if (typeof Storage !== 'undefined') {
+    localStorage.setItem('mtaLastChecked', now.toISOString());
+  }
+
+  // Open MTA alerts
+  window.open('https://new.mta.info/alerts', '_blank');
+  showToast('Checking MTA service status', '🚇');
+}
+
+function restoreMTALastChecked() {
+  if (typeof Storage === 'undefined') return;
+  var saved = localStorage.getItem('mtaLastChecked');
+  if (!saved) return;
+  var date = new Date(saved);
+  var now = new Date();
+  var diffMs = now - date;
+  var diffMins = Math.floor(diffMs / 60000);
+
+  var el = document.getElementById('mta-last-checked');
+  if (!el) return;
+
+  if (diffMins < 1) {
+    el.textContent = 'Last checked: just now';
+  } else if (diffMins < 60) {
+    el.textContent = 'Last checked: ' + diffMins + ' min ago';
+  } else if (diffMins < 1440) {
+    var hrs = Math.floor(diffMins / 60);
+    el.textContent = 'Last checked: ' + hrs + 'h ago';
+  } else {
+    el.textContent = 'Last checked: ' + date.toLocaleDateString();
+  }
+}
+
 // === MTA APP LAUNCHER ===
 function openMTAApp() {
   // Try deep-linking to MYmta app, fall back to MTA website
@@ -544,6 +594,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // Scroll-reveal with Intersection Observer
   initScrollReveal();
+
+  // MTA last-checked timestamp
+  restoreMTALastChecked();
 
   // Bookmarks
   initBookmarks();

@@ -1637,7 +1637,48 @@ header.compact .countdown-num { font-size: 1rem; }
   background: #00933C;
   display: inline-block;
   animation: mtaPulse 2s ease-in-out infinite;
+}
+
+.mta-refresh-btn {
   margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(143, 180, 214, 0.1);
+  border: 1px solid rgba(143, 180, 214, 0.25);
+  color: var(--ice-blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.mta-refresh-btn:hover {
+  background: rgba(143, 180, 214, 0.2);
+  border-color: var(--ice-blue);
+}
+
+.mta-refresh-btn:active {
+  transform: scale(0.9);
+}
+
+.mta-refresh-icon {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mta-refresh-btn.spinning .mta-refresh-icon {
+  transform: rotate(360deg);
+}
+
+.mta-last-checked {
+  font-size: 0.7rem;
+  color: var(--gray);
+  margin-bottom: 12px;
 }
 
 @keyframes mtaPulse {

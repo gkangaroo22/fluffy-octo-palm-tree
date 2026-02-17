@@ -126,7 +126,11 @@
       <span style="font-size: 1.5rem;">🚇</span>
       <strong style="font-size: 1rem;">NYC Transit</strong>
       <span class="mta-live-dot"></span>
+      <button class="mta-refresh-btn" onclick="refreshMTA()" aria-label="Check service status">
+        <span class="mta-refresh-icon">↻</span>
+      </button>
     </div>
+    <div class="mta-last-checked" id="mta-last-checked"></div>
 
     <div class="mta-lines-row">
       <a href="https://new.mta.info/alerts" target="_blank" class="mta-line" style="background: #0039A6;">A</a>
