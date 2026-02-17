@@ -385,6 +385,59 @@ function initBookmarks() {
   });
 }
 
+// === BIRTHDAY CELEBRATION ===
+function checkBirthday() {
+  var now = new Date();
+  if (now.getMonth() !== 1 || now.getDate() !== 22) return;
+
+  // Only show once per session
+  if (sessionStorage.getItem('birthdayCelebrated')) return;
+  sessionStorage.setItem('birthdayCelebrated', 'true');
+
+  // Create confetti overlay
+  var overlay = document.createElement('div');
+  overlay.className = 'birthday-overlay';
+  document.body.appendChild(overlay);
+
+  var colors = ['#D4AF7A', '#B89FD9', '#8FB4D6', '#D4A5A5', '#7FC7D9', '#B8D4E8', '#FFD700', '#FF69B4'];
+  for (var i = 0; i < 80; i++) {
+    var piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+    piece.style.animationDelay = (Math.random() * 1.5) + 's';
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (8 + Math.random() * 10) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    overlay.appendChild(piece);
+  }
+
+  // Create banner
+  var banner = document.createElement('div');
+  banner.className = 'birthday-banner';
+  banner.innerHTML = '<h2>Happy Birthday!</h2><div class="birthday-sub">This is your day. Own it.</div>';
+  document.body.appendChild(banner);
+
+  // Clean up after animation
+  setTimeout(function() {
+    banner.style.transition = 'opacity 1s ease';
+    banner.style.opacity = '0';
+    setTimeout(function() {
+      overlay.remove();
+      banner.remove();
+    }, 1000);
+  }, 4500);
+
+  // Haptic burst if available
+  if (navigator.vibrate) navigator.vibrate([50, 30, 50, 30, 100]);
+
+  // Show toast after confetti
+  setTimeout(function() {
+    showToast('It\'s your birthday! Make it legendary.', '🎂');
+  }, 5500);
+}
+
 // === INITIALIZE EVERYTHING ===
 window.addEventListener('DOMContentLoaded', function() {
   // Checklist
@@ -454,6 +507,9 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Birthday celebration
+  checkBirthday();
 
   // Scroll-reveal with Intersection Observer
   initScrollReveal();

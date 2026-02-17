@@ -184,6 +184,7 @@ header::before {
   display: inline-block;
   margin-bottom: 16px;
   perspective: 600px;
+  transition: opacity 0.3s ease, height 0.3s ease, margin 0.3s ease;
 }
 
 .header-emoji {
@@ -585,12 +586,10 @@ h2[contenteditable="true"]:focus {
   font-size: 0.9rem;
   color: var(--ice-blue);
   margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
   font-weight: 500;
   padding: 2px 0;
   transition: all 0.3s;
+  line-height: 1.8;
 }
 
 .location[contenteditable="true"]:hover {
@@ -1457,7 +1456,14 @@ header.compact {
   padding: 16px 20px 12px;
 }
 
-header.compact .disco-container { display: none; }
+header.compact .disco-container {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, height 0.3s ease, margin 0.3s ease;
+}
 header.compact h1 { font-size: 1.6rem; margin-bottom: 4px; }
 header.compact .subtitle { font-size: 0.7rem; letter-spacing: 4px; }
 header.compact .countdown { margin-top: 8px; }
@@ -1557,6 +1563,62 @@ header.compact .countdown-num { font-size: 1rem; }
   opacity: 0.5;
   text-decoration: line-through;
   text-decoration-color: var(--gray);
+}
+
+/* === BIRTHDAY CELEBRATION === */
+.birthday-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg) scale(0.5); opacity: 0; }
+}
+
+.birthday-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 601;
+  text-align: center;
+  pointer-events: none;
+  animation: bannerPop 0.6s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.birthday-banner h2 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 2rem;
+  color: var(--warm-gold);
+  text-shadow: 0 0 30px rgba(212, 175, 122, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.birthday-banner .birthday-sub {
+  font-size: 1rem;
+  color: var(--light-gray);
+  margin-top: 8px;
+}
+
+@keyframes bannerPop {
+  to { transform: translate(-50%, -50%) scale(1); }
 }
 
 /* === RESPONSIVE === */
