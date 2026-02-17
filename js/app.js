@@ -42,6 +42,11 @@ function openTab(tabId, btnElement) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  // Re-render recommendations when For You tab is opened
+  if (tabId === 'tab-recs' && typeof RecEngine !== 'undefined') {
+    RecEngine.renderAll();
+  }
+
   // Save active tab
   if (typeof Storage !== 'undefined') {
     localStorage.setItem('activeTab', tabId);
@@ -50,7 +55,7 @@ function openTab(tabId, btnElement) {
 
 // Scroll to a specific event card within a tab
 function scrollToEvent(tabId, eventId) {
-  var tabIndex = tabId === 'tab-fri' ? 1 : tabId === 'tab-sat' ? 2 : tabId === 'tab-sun' ? 3 : 4;
+  var tabIndex = tabId === 'tab-fri' ? 2 : tabId === 'tab-sat' ? 3 : tabId === 'tab-sun' ? 4 : 5;
   var tabBtn = document.querySelectorAll('.tab-btn')[tabIndex];
   openTab(tabId, tabBtn);
 
@@ -563,7 +568,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var activeTabId = localStorage.getItem('activeTab');
     if (activeTabId) {
       var tabBtn = null;
-      var tabIds = ['tab-home', 'tab-fri', 'tab-sat', 'tab-sun', 'tab-budget', 'tab-checklist'];
+      var tabIds = ['tab-home', 'tab-recs', 'tab-fri', 'tab-sat', 'tab-sun', 'tab-budget', 'tab-checklist'];
       var tabIndex = tabIds.indexOf(activeTabId);
       if (tabIndex >= 0) {
         tabBtn = document.querySelectorAll('.tab-btn')[tabIndex];
@@ -600,6 +605,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // Bookmarks
   initBookmarks();
+
+  // Recommendations engine
+  if (typeof RecEngine !== 'undefined') {
+    RecEngine.init();
+  }
 
   // Now indicator (check every 30s)
   updateNowIndicator();
