@@ -2,7 +2,7 @@
   "name": "NYC Birthday 2026",
   "short_name": "NYC 2026",
   "description": "Birthday trip planner — Feb 20-23, 2026",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",

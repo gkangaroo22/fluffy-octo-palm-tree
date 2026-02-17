@@ -1,10 +1,10 @@
-var CACHE_NAME = 'nyc-birthday-v1';
+var CACHE_NAME = 'nyc-birthday-v2';
 var URLS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/app.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './css/styles.css',
+  './js/app.js',
+  './manifest.json'
 ];
 
 self.addEventListener('install', function(event) {
